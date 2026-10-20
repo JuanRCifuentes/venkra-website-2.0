@@ -1,0 +1,38 @@
+---
+import WhatsApp from '../../assets/icons/whatsapp.svg';
+import { site } from '../../data/site';
+---
+
+<section id="escribenos" class="section contact" aria-labelledby="contact-title">
+	<h2 id="contact-title" class="section-title">Escríbenos</h2>
+	<p>Pedidos, tallas o dudas. Te respondemos por WhatsApp.</p>
+	<a class="stamp cta" href={site.whatsapp} target="_blank" rel="noopener">
+		<WhatsApp aria-hidden="true" />
+		<span>Abrir WhatsApp</span>
+	</a>
+</section>
+
+<style>
+	.contact {
+		display: grid;
+		justify-items: center;
+		gap: 1.5rem;
+		text-align: center;
+	}
+
+	.section-title {
+		font-size: clamp(3.5rem, 14vw, 12rem);
+	}
+
+	p {
+		margin: 0;
+		color: var(--color-muted);
+		font-size: 1.125rem;
+	}
+
+	.cta {
+		--stamp-size: 3.25rem;
+		padding: 0 1.75rem;
+		font-size: 1.1rem;
+	}
+</style>
