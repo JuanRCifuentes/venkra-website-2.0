@@ -16,7 +16,7 @@ export interface Product {
 }
 
 const img = (path: string) => `https://i.postimg.cc/${path}`;
-const shirt = (xl: number, l: number, m: number, s: number) => ({ S: s, M: m, L: l, XL: xl });
+const shirt = (s: number, m: number, l: number, xl: number) => ({ S: s, M: m, L: l, XL: xl });
 const smoke = ['Algodón premium de 200 g con lavado vintage', 'Corte amplio y ultra cómodo'];
 const qtar = ['Algodón peinado heavyweight de 220 a 260 g', 'Oversized fit con hombros caídos'];
 
@@ -28,7 +28,7 @@ export const products: readonly Product[] = [
 		price: 75000,
 		details: [smoke[0], 'Logo 3D en rojo y negro', smoke[1]],
 		images: [img('rpB1dLx4/ACID-NNegro-(8).jpg')],
-		stock: shirt(2, 2, 1, 1),
+		stock: shirt(1, 1, 2, 2),
 	},
 	{
 		id: 'brown-smoke',
@@ -44,7 +44,7 @@ export const products: readonly Product[] = [
 			img('vHrNb0Rg/ACID-Cafe-(6).jpg'),
 			img('8PR0NZ8Z/ACID-Cafe-(9).jpg'),
 		],
-		stock: shirt(1, 1, 2, 2),
+		stock: shirt(2, 2, 1, 1),
 	},
 	{
 		id: 'white-smoke',
@@ -61,7 +61,7 @@ export const products: readonly Product[] = [
 			img('KvDJd4BF/ACID-Gris-Negro-(7).jpg'),
 			img('g2cNddqQ/ACID-Gris-Negro-(8).jpg'),
 		],
-		stock: shirt(1, 3, 1, 1),
+		stock: shirt(1, 1, 3, 1),
 	},
 	{
 		id: 'yellow-smoke',
@@ -75,7 +75,7 @@ export const products: readonly Product[] = [
 			img('fbJCtKFM/ACID-NAmarillo-(3).jpg'),
 			img('tgYkZ5fp/ACID-NAmarillo-(1).jpg'),
 		],
-		stock: shirt(2, 2, 1, 1),
+		stock: shirt(1, 1, 2, 2),
 	},
 	{
 		id: 'orange-smoke',
@@ -84,7 +84,7 @@ export const products: readonly Product[] = [
 		price: 75000,
 		details: [smoke[0], 'Logo 3D naranja de alto contraste', smoke[1]],
 		images: [img('1tFKMzsH/ACID-NNaranja-(5).jpg'), img('26WxT5r2/ACID-NNaranja-(1).jpg')],
-		stock: shirt(1, 3, 1, 1),
+		stock: shirt(1, 1, 3, 1),
 	},
 	{
 		id: 'grey-qtar',
@@ -93,7 +93,7 @@ export const products: readonly Product[] = [
 		price: 70000,
 		details: [qtar[0], 'Estampado VENKRA en vinilo 3D de alta densidad', qtar[1]],
 		images: [img('dVYHNp1F/OVERZ-Gris-(3).jpg')],
-		stock: shirt(2, 1, 2, 2),
+		stock: shirt(2, 2, 1, 2),
 	},
 	{
 		id: 'brown-qtar',
@@ -102,7 +102,7 @@ export const products: readonly Product[] = [
 		price: 70000,
 		details: [qtar[0], 'Color beige arena con estampado VENKRA en vinilo 3D', qtar[1]],
 		images: [img('dQhxhGXf/OVERZ%20Caf%C3%A9%20(2).jpg')],
-		stock: shirt(1, 3, 1, 1),
+		stock: shirt(1, 1, 3, 1),
 	},
 	{
 		id: 'black-yellow-qtar',
@@ -111,7 +111,7 @@ export const products: readonly Product[] = [
 		price: 70000,
 		details: [qtar[0], 'Estampado VENKRA amarillo en vinilo 3D sobre negro profundo', qtar[1]],
 		images: [img('hvpMQ5SF/OVER-NAmarillo-(2).jpg')],
-		stock: shirt(1, 1, 2, 1),
+		stock: shirt(1, 2, 1, 1),
 	},
 	{
 		id: 'black-orange-qtar',
@@ -120,7 +120,7 @@ export const products: readonly Product[] = [
 		price: 70000,
 		details: [qtar[0], 'Estampado VENKRA naranja en vinilo 3D sobre negro profundo', qtar[1]],
 		images: [img('4NtVM37J/OVER-NNaranja-(8).jpg')],
-		stock: shirt(2, 2, 1, 1),
+		stock: shirt(1, 1, 2, 2),
 	},
 	{
 		id: 'yellow-shadow',
@@ -129,7 +129,7 @@ export const products: readonly Product[] = [
 		price: 70000,
 		details: [qtar[0], 'Estampado VENKRA negro con sombra amarilla sobre negro profundo', qtar[1]],
 		images: [img('vBH4ZYZp/OVER-Negra-Amarillo-(11).jpg')],
-		stock: shirt(2, 2, 1, 1),
+		stock: shirt(1, 1, 2, 2),
 	},
 	{
 		id: 'trucker-carbon',
@@ -174,7 +174,7 @@ export const products: readonly Product[] = [
 		price: 130000,
 		details: ['Algodón perchado', 'Estampado rojo de diseño exclusivo', 'Rib en mangas y fajín'],
 		images: [img('52pTV29c/b-venkra-negro-p.jpg')],
-		stock: shirt(2, 7, 7, 3),
+		stock: shirt(3, 7, 7, 2),
 	},
 	{
 		id: 'hoodie-vnk',
@@ -183,7 +183,7 @@ export const products: readonly Product[] = [
 		price: 150000,
 		details: ['Algodón perchado', 'Estampado negro de diseño exclusivo', 'Punteras y ojaletes metálicos contramarcados'],
 		images: [img('3wXm2NSk/b-hoodie-gris-p.jpg')],
-		stock: shirt(1, 0, 0, 0),
+		stock: shirt(0, 0, 0, 1),
 	},
 ];
 

@@ -19,7 +19,7 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 
 <section class="cover" data-cover>
 	<img class="photo" src={product.images[0]} alt={product.name} data-photo />
-	<div class="panel">
+	<div class="panel cream">
 		<div class="intro">
 			<p class="eyebrow">{category.name}</p>
 			<h1 class="name">{product.name}</h1>
@@ -43,6 +43,7 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 					<legend class="eyebrow">Talla</legend>
 					{sizes.map(([label, units]) => (
 						<button
+							class="stamp"
 							type="button"
 							data-size={label}
 							data-href={orderLink(product, label)}
@@ -56,11 +57,11 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 				</fieldset>
 			)}
 			{size ? (
-				<a class="cta" href={orderLink(product, picker ? size : undefined)} target="_blank" rel="noopener" data-cta>
+				<a class="stamp cta" href={orderLink(product, picker ? size : undefined)} target="_blank" rel="noopener" data-cta>
 					{picker ? <span>Pedir talla <span data-label>{size}</span> por WhatsApp</span> : 'Pedir por WhatsApp'}
 				</a>
 			) : (
-				<p class="cta sold">Agotada</p>
+				<p class="stamp cta" aria-disabled="true">Agotada</p>
 			)}
 		</div>
 	</div>
@@ -108,8 +109,6 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 		justify-content: space-between;
 		gap: 2.5rem;
 		padding: clamp(1.5rem, 4vw, 3rem);
-		background: var(--color-accent);
-		color: var(--color-bg);
 	}
 
 	.intro {
@@ -186,18 +185,9 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 		margin-bottom: 0.5rem;
 	}
 
-	.sizes button {
-		height: 3rem;
-		border: 1px solid rgb(0 0 0 / 0.4);
-		background: none;
-		color: var(--color-bg);
-		font: 700 0.95rem/1 var(--font-display);
-		letter-spacing: 0.14em;
-		cursor: pointer;
-	}
-
-	.sizes button:hover:not(:disabled) {
-		border-color: var(--color-bg);
+	.sizes .stamp {
+		justify-content: center;
+		--stamp-size: 3rem;
 	}
 
 	.sizes [aria-pressed='true'] {
@@ -206,38 +196,18 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 		color: var(--color-accent);
 	}
 
-	.sizes button:disabled {
+	.sizes .stamp:disabled {
 		opacity: 0.35;
 		text-decoration: line-through;
-		cursor: not-allowed;
-	}
-
-	:is(.thumbs, .sizes) button:focus-visible,
-	.cta:focus-visible {
-		outline: 2px solid var(--color-bg);
-		outline-offset: 2px;
+		pointer-events: none;
 	}
 
 	.cta {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 3.5rem;
+		--stamp-size: 3.5rem;
 		margin: 0;
-		background: var(--color-bg);
-		color: var(--color-accent);
-		font: 700 0.95rem/1 var(--font-display);
-		letter-spacing: 0.16em;
-		text-decoration: none;
-		text-transform: uppercase;
 	}
 
-	a.cta:hover {
-		background: var(--color-fg);
-		color: var(--color-bg);
-	}
-
-	.sold {
+	[aria-disabled='true'] {
 		opacity: 0.5;
 	}
 
