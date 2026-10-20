@@ -1,0 +1,55 @@
+---
+import { site } from '../../data/site';
+
+// More product shots from the old site's spreadsheet, standing in for the
+// Instagram feed until it is pulled in for real.
+const photos = [
+	'https://i.postimg.cc/xTv4n6rm/ACID-Cafe-(5).jpg',
+	'https://i.postimg.cc/xT3tWqMS/ACID-Gris-Negro-(6).jpg',
+	'https://i.postimg.cc/tgYkZ5fp/ACID-NAmarillo-(1).jpg',
+	'https://i.postimg.cc/hvpMQ5SF/OVER-NAmarillo-(2).jpg',
+	'https://i.postimg.cc/vHrNb0Rg/ACID-Cafe-(6).jpg',
+	'https://i.postimg.cc/tTQdMHrS/Plata1.jpg',
+];
+---
+
+<section id="instagram" class="section" aria-labelledby="instagram-title">
+	<header class="section-head">
+		<h2 id="instagram-title" class="section-title">@venkra.co</h2>
+		<a class="stamp" href={site.instagram} target="_blank" rel="noopener">Síguenos en Instagram</a>
+	</header>
+	<ul class="photos">
+		{photos.map((src) => (
+			<li><img src={src} alt="" loading="lazy" decoding="async" /></li>
+		))}
+	</ul>
+</section>
+
+<style>
+	.section-head {
+		align-items: end;
+	}
+
+	.photos {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+		gap: 4px;
+	}
+
+	img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 1;
+		object-fit: cover;
+		background: var(--color-surface);
+	}
+
+	@media (max-width: 760px) {
+		.photos {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>
