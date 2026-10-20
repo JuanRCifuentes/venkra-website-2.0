@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategoryBlock from '../../components/catalogue/CategoryBlock.astro';
+import { categories } from '../../data/categories';
+import { products } from '../../data/products';
+
+const total = products.length;
+---
+
+<BaseLayout title="Catálogo · Venkra">
+	<main class="section catalogue">
+		<header class="section-head">
+			<h1 class="section-title">Catálogo</h1>
+			<p class="eyebrow">{categories.length} líneas · {total} prendas</p>
+		</header>
+		<div class="lines">
+			{categories.map((category, i) => (
+				<CategoryBlock
+					category={category}
+					index={i + 1}
+					products={products.filter((product) => product.category === category.id)}
+				/>
+			))}
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.catalogue {
+		padding-top: calc(var(--header-height) + clamp(3rem, 6vw, 5rem));
+	}
+
+	.lines {
+		display: grid;
+		gap: 4px;
+	}
+</style>
