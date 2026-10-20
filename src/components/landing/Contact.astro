@@ -13,16 +13,17 @@ import { site } from '../../data/site';
 </section>
 
 <style>
-	/* A slim band between two lines: title, one line of text and the button. */
+	/* A slim band between two lines: title, one line of text and the button. It sits
+	   right on the footer, so the footer's top line closes it. */
 	.contact {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: 1rem 2rem;
-		margin-block: clamp(3rem, 6vw, 5rem);
+		margin-block: clamp(3rem, 6vw, 5rem) 0;
 		padding-block: 2.5rem;
-		border-block: 1px solid var(--color-line);
+		border-top: 1px solid var(--color-line);
 	}
 
 	.section-title {
