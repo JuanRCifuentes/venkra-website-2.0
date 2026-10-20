@@ -2,6 +2,9 @@
 // idle, as their links scroll into view. The client router then swaps in that
 // copy, so following a link needs no network at all. Copies last for the tab's
 // session; anything not cached, or any failure, goes through Astro's loader.
+// Cached copies can outlive a deploy. That is safe while every page shares the
+// one /_astro script the tab already loaded; a page with its own /_astro script
+// could reference a chunk the new deploy deleted.
 const idle = window.requestIdleCallback ?? ((run: () => void) => setTimeout(run, 0));
 const pages = new Map<string, Promise<string>>();
 const key = (url: URL) => url.pathname.replace(/\/$/, '') || '/';
