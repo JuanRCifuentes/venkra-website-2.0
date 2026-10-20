@@ -51,4 +51,9 @@ import { site } from '../../data/site';
 		background: var(--color-bg);
 		color: var(--color-accent);
 	}
+
+	/* The global accent outline would vanish on the cream. */
+	.cta:focus-visible {
+		outline-color: var(--color-bg);
+	}
 </style>
