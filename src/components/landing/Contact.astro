@@ -4,7 +4,7 @@ import WhatsApp from '../../assets/icons/whatsapp.svg';
 import { site } from '../../data/site';
 ---
 
-<section id="escribenos" class="section contact" aria-label="Escríbenos">
+<section id="escribenos" class="section contact cream" aria-label="Escríbenos">
 	<Eagle class="eagle" aria-hidden="true" />
 	<p>Pedidos, tallas o dudas. Te respondemos por WhatsApp.</p>
 	<a class="stamp cta" href={site.whatsapp} target="_blank" rel="noopener">
@@ -24,8 +24,6 @@ import { site } from '../../data/site';
 		max-width: calc(var(--page-max) - 2 * var(--page-gutter));
 		margin-block: clamp(3rem, 6vw, 5rem);
 		padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
-		background: var(--color-accent);
-		color: var(--color-bg);
 	}
 
 	.eagle {
@@ -44,16 +42,5 @@ import { site } from '../../data/site';
 
 	.cta {
 		--stamp-size: 2.75rem;
-	}
-
-	.cta:not(:hover) {
-		border-color: var(--color-bg);
-		background: var(--color-bg);
-		color: var(--color-accent);
-	}
-
-	/* The global accent outline would vanish on the cream. */
-	.cta:focus-visible {
-		outline-color: var(--color-bg);
 	}
 </style>
