@@ -1,5 +1,5 @@
 ---
-import Logo from '../assets/logo-full.svg';
+import Logo from '../../assets/logo-full.svg';
 ---
 
 <section class="hero">
@@ -72,7 +72,7 @@ import Logo from '../assets/logo-full.svg';
 		height: 100vh;
 		height: 100svh;
 		overflow: hidden;
-		background: #000;
+		background: var(--color-bg);
 	}
 
 	.hero-video {
@@ -93,7 +93,7 @@ import Logo from '../assets/logo-full.svg';
 		position: absolute;
 		inset: 0;
 		overflow: hidden;
-		background: #000;
+		background: var(--color-bg);
 		--hero-hole: 0px;
 		mask: radial-gradient(circle, transparent var(--hero-hole), #000 calc(var(--hero-hole) + 2px));
 		transition: --hero-hole 1.2s steps(12) 0.15s;
@@ -125,7 +125,7 @@ import Logo from '../assets/logo-full.svg';
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		color: #fff;
+		color: var(--color-fg);
 	}
 
 	.hero-logo {
@@ -183,7 +183,7 @@ import Logo from '../assets/logo-full.svg';
 		inset: 0;
 		height: 100%;
 		fill: none;
-		stroke: #efe3c8;
+		stroke: var(--color-accent);
 		stroke-width: 2px;
 		opacity: 0;
 		pointer-events: none;
