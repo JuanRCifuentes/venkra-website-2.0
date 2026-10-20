@@ -3,6 +3,7 @@ import Logo from '../assets/logo-full.svg';
 ---
 
 <section class="hero">
+	<noscript><style>.hero-curtain { display: none; } .hero-logo, .hero-scroll { opacity: 1 !important; transform: none !important; }</style></noscript>
 	<video
 		class="hero-video"
 		autoplay
@@ -19,6 +20,7 @@ import Logo from '../assets/logo-full.svg';
 		<source src="/hero/hero.av1.mp4" type='video/mp4; codecs="av01.0.04M.08"' media="(prefers-reduced-motion: no-preference)" />
 		<source src="/hero/hero.h264.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
 	</video>
+	<div class="hero-curtain"></div>
 	<div class="hero-content">
 		<h1 class="hero-logo">
 			<Logo role="img" aria-label="Venkra" />
@@ -31,6 +33,34 @@ import Logo from '../assets/logo-full.svg';
 		</div>
 	</div>
 </section>
+
+<script is:inline>
+	(() => {
+		// Keep the logo on the curtain until the video (or, with reduced motion,
+		// the poster) is ready, for at least MIN_MS and at most MAX_MS.
+		const MIN_MS = 1200;
+		const MAX_MS = 3000;
+		const hero = document.querySelector('.hero');
+		const video = hero.querySelector('video');
+		const start = performance.now();
+		let revealed = false;
+		const reveal = () => {
+			if (revealed) return;
+			revealed = true;
+			const wait = Math.max(0, MIN_MS - (performance.now() - start));
+			setTimeout(() => (hero.dataset.state = 'revealed'), wait);
+		};
+		if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+			if (video.readyState >= 3) reveal();
+			else video.addEventListener('canplay', reveal, { once: true });
+		} else {
+			const poster = new Image();
+			poster.onload = poster.onerror = reveal;
+			poster.src = video.poster;
+		}
+		setTimeout(reveal, MAX_MS);
+	})();
+</script>
 
 <style>
 	.hero {
@@ -48,6 +78,17 @@ import Logo from '../assets/logo-full.svg';
 		object-fit: cover;
 	}
 
+	.hero-curtain {
+		position: absolute;
+		inset: 0;
+		background: #111820;
+		transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+	}
+
+	.hero[data-state='revealed'] .hero-curtain {
+		transform: translateY(-100%);
+	}
+
 	.hero-content {
 		position: absolute;
 		inset: 0;
@@ -60,7 +101,23 @@ import Logo from '../assets/logo-full.svg';
 	.hero-logo {
 		width: min(60%, 60rem);
 		margin: 0;
+		opacity: 0;
+		transform: scale(1.2);
+		animation: hero-logo-in 0.6s ease-out forwards;
+		transition:
+			transform 1s cubic-bezier(0.76, 0, 0.24, 1),
+			filter 0.6s ease 0.4s;
+	}
+
+	.hero[data-state='revealed'] .hero-logo {
+		transform: none;
 		filter: drop-shadow(0 0 5px #000);
+	}
+
+	@keyframes hero-logo-in {
+		to {
+			opacity: 1;
+		}
 	}
 
 	.hero-logo svg {
@@ -80,6 +137,12 @@ import Logo from '../assets/logo-full.svg';
 		gap: 0.75rem;
 		font-weight: 900;
 		filter: drop-shadow(0 0 3px #000);
+		opacity: 0;
+		transition: opacity 0.6s ease 0.8s;
+	}
+
+	.hero[data-state='revealed'] .hero-scroll {
+		opacity: 1;
 	}
 
 	.hero-scroll-arrow {
@@ -100,6 +163,19 @@ import Logo from '../assets/logo-full.svg';
 	@media (prefers-reduced-motion: reduce) {
 		.hero-scroll-arrow {
 			animation: none;
+		}
+
+		.hero-curtain {
+			transition: opacity 0.4s ease;
+		}
+
+		.hero[data-state='revealed'] .hero-curtain {
+			transform: none;
+			opacity: 0;
+		}
+
+		.hero-logo {
+			transform: none;
 		}
 	}
 
