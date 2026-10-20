@@ -1,5 +1,8 @@
 ---
 import Hero from '../components/Hero.astro';
+import CatalogueA from '../components/catalogue/CatalogueA.astro';
+import CatalogueB from '../components/catalogue/CatalogueB.astro';
+import CatalogueC from '../components/catalogue/CatalogueC.astro';
 ---
 
 <html lang="es">
@@ -19,6 +22,13 @@ import Hero from '../components/Hero.astro';
 	<body>
 		<main>
 			<Hero />
+			<!-- Temporary: three catalogue directions to compare. Keep one. -->
+			<p class="option-label">Opción A · Índice editorial</p>
+			<CatalogueA />
+			<p class="option-label">Opción B · Pósters</p>
+			<CatalogueB />
+			<p class="option-label">Opción C · Banda y carrusel</p>
+			<CatalogueC />
 		</main>
 	</body>
 </html>
@@ -26,11 +36,27 @@ import Hero from '../components/Hero.astro';
 <style is:global>
 	:root {
 		color-scheme: dark;
+		--font-display: 'Avenir Next Condensed', 'Arial Narrow', 'Roboto Condensed', Impact, sans-serif;
 	}
 
 	body {
 		margin: 0;
 		background: #000;
 		font-family: system-ui, sans-serif;
+	}
+</style>
+
+<style>
+	.option-label {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		margin: 0;
+		padding: 0.75rem 1rem;
+		background: #efe3c8;
+		color: #000;
+		font: 800 0.8rem/1 system-ui, sans-serif;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
 	}
 </style>
