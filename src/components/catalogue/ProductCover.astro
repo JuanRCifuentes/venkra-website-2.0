@@ -68,25 +68,22 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 </section>
 
 <script>
+	// Listening on the document once keeps working across client navigations.
 	// Thumbs swap the photo; sizes point the order link at the chosen size.
-	for (const cover of document.querySelectorAll<HTMLElement>('[data-cover]')) {
-		const photo = cover.querySelector<HTMLImageElement>('[data-photo]')!;
-		const cta = cover.querySelector<HTMLAnchorElement>('[data-cta]');
-		const pick = (button: HTMLElement, group: string) => {
-			cover.querySelectorAll(`[${group}]`).forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
-		};
-		cover.addEventListener('click', (event) => {
-			const button = (event.target as Element).closest<HTMLButtonElement>('button');
-			if (button?.dataset.src) {
-				photo.src = button.dataset.src;
-				pick(button, 'data-src');
-			} else if (button?.dataset.size && cta) {
-				cta.href = button.dataset.href!;
-				cta.querySelector('[data-label]')!.textContent = button.dataset.size;
-				pick(button, 'data-size');
-			}
-		});
-	}
+	document.addEventListener('click', (event) => {
+		const button = (event.target as Element).closest<HTMLButtonElement>('[data-cover] button');
+		const cover = button?.closest<HTMLElement>('[data-cover]');
+		if (!button || !cover) return;
+		const group = button.dataset.src ? 'data-src' : 'data-size';
+		cover.querySelectorAll(`[${group}]`).forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+		if (button.dataset.src) {
+			cover.querySelector<HTMLImageElement>('[data-photo]')!.src = button.dataset.src;
+		} else {
+			const cta = cover.querySelector<HTMLAnchorElement>('[data-cta]')!;
+			cta.href = button.dataset.href!;
+			cta.querySelector('[data-label]')!.textContent = button.dataset.size!;
+		}
+	});
 </script>
 
 <style>

@@ -37,7 +37,7 @@ import Logo from '../../assets/logo-full.svg';
 	</div>
 </section>
 
-<script is:inline>
+<script is:inline data-astro-rerun>
 	(() => {
 		// Keep the logo on the curtain until the video (or, with reduced motion,
 		// the poster) is ready, for at least MIN_MS (long enough for the logo to
@@ -47,6 +47,7 @@ import Logo from '../../assets/logo-full.svg';
 		const hero = document.querySelector('.hero');
 		const video = hero.querySelector('video');
 		const start = performance.now();
+		const dropCurtain = () => hero.querySelectorAll('.hero-curtain, .hero-ring').forEach((el) => el.remove());
 		let revealed = false;
 		const reveal = () => {
 			if (revealed) return;
@@ -56,10 +57,16 @@ import Logo from '../../assets/logo-full.svg';
 				hero.dataset.state = 'revealed';
 				// Once the curtain has opened and the rings have rippled out,
 				// drop them so their mask and grain are never drawn again.
-				setTimeout(() => hero.querySelectorAll('.hero-curtain, .hero-ring').forEach((el) => el.remove()), 1800);
+				setTimeout(dropCurtain, 1800);
 			}, wait);
 		};
-		if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+		if (window.venkraIntroPlayed) {
+			// The intro plays once per visit: coming back through the client
+			// router opens straight onto the video.
+			revealed = true;
+			hero.dataset.state = 'revealed';
+			dropCurtain();
+		} else if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
 			if (video.readyState >= 3) reveal();
 			else video.addEventListener('canplay', reveal, { once: true });
 		} else {
@@ -67,6 +74,7 @@ import Logo from '../../assets/logo-full.svg';
 			poster.onload = poster.onerror = reveal;
 			poster.src = video.poster;
 		}
+		window.venkraIntroPlayed = true;
 		setTimeout(reveal, MAX_MS);
 
 		// Only decode the video while the hero is on screen.
