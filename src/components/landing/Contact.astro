@@ -13,26 +13,30 @@ import { site } from '../../data/site';
 </section>
 
 <style>
+	/* A slim band between two lines: title, one line of text and the button. */
 	.contact {
-		display: grid;
-		justify-items: center;
-		gap: 1.5rem;
-		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem 2rem;
+		margin-block: clamp(3rem, 6vw, 5rem);
+		padding-block: 2.5rem;
+		border-block: 1px solid var(--color-line);
 	}
 
 	.section-title {
-		font-size: clamp(3.5rem, 14vw, 12rem);
+		font-size: clamp(2rem, 4vw, 3rem);
 	}
 
 	p {
+		flex: 1 1 16rem;
 		margin: 0;
 		color: var(--color-muted);
 		font-size: 1.125rem;
 	}
 
 	.cta {
-		--stamp-size: 3.25rem;
-		padding: 0 1.75rem;
-		font-size: 1.1rem;
+		--stamp-size: 2.75rem;
 	}
 </style>
