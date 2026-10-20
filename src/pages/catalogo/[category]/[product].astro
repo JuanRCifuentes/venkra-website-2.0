@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/catalogue/Breadcrumbs.astro';
 import ProductCover from '../../../components/catalogue/ProductCover.astro';
-import ProductTile from '../../../components/catalogue/ProductTile.astro';
+import ProductRow from '../../../components/catalogue/ProductRow.astro';
 import { categories } from '../../../data/categories';
 import { products, type Product } from '../../../data/products';
 
@@ -36,11 +36,7 @@ const more = products.filter((other) => other.category === product.category && o
 					<h2 id="more-title" class="more-title">Más de {category.name}</h2>
 					<a class="eyebrow" href={`/catalogo/${category.id}`}>Ver todo</a>
 				</header>
-				<ul class="more">
-					{more.map((other) => (
-						<li><ProductTile product={other} /></li>
-					))}
-				</ul>
+				<ProductRow products={more} />
 			</section>
 		)}
 	</main>
@@ -64,30 +60,5 @@ const more = products.filter((other) => other.category === product.category && o
 
 	.eyebrow {
 		text-decoration: none;
-	}
-
-	.more {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 4px;
-	}
-
-	.more li {
-		aspect-ratio: 4 / 5;
-	}
-
-	@media (max-width: 760px) {
-		.more {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-
-		/* With an odd count, the last tile fills the row instead of leaving a hole. */
-		.more li:last-child:nth-child(odd) {
-			grid-column: span 2;
-			aspect-ratio: 8 / 5;
-		}
 	}
 </style>

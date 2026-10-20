@@ -1,6 +1,6 @@
 ---
 import { featured } from '../../data/products';
-import ProductTile from '../catalogue/ProductTile.astro';
+import ProductRow from '../catalogue/ProductRow.astro';
 ---
 
 <section id="destacados" class="section" aria-labelledby="featured-title">
@@ -8,30 +8,5 @@ import ProductTile from '../catalogue/ProductTile.astro';
 		<h2 id="featured-title" class="section-title">Destacados</h2>
 		<p class="eyebrow">Uno de cada línea</p>
 	</header>
-	<ul class="products">
-		{featured.map((product) => (
-			<li><ProductTile product={product} /></li>
-		))}
-	</ul>
+	<ProductRow products={featured} />
 </section>
-
-<style>
-	.products {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 4px;
-	}
-
-	li {
-		aspect-ratio: 4 / 5;
-	}
-
-	@media (max-width: 760px) {
-		.products {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-	}
-</style>
