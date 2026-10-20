@@ -5,7 +5,7 @@ import WhatsApp from '../../assets/icons/whatsapp.svg';
 import { site } from '../../data/site';
 import { padIndex } from '../../lib/format';
 
-const { links, tagline, credit } = site;
+const { links, support, tagline, credit } = site;
 const year = new Date().getFullYear();
 ---
 
@@ -31,6 +31,9 @@ const year = new Date().getFullYear();
 			</a>
 		</div>
 	</div>
+	<nav class="support" aria-label="Ayuda">
+		{support.map((link) => <a href={link.href}>{link.label}</a>)}
+	</nav>
 	<div class="legal">
 		<p>© {year} Venkra<span class="legal-tagline"> · {tagline}</span><span class="legal-rights">. Todos los derechos reservados.</span></p>
 		<a href={credit.href} target="_blank" rel="noopener">{credit.label}</a>
@@ -96,11 +99,31 @@ const year = new Date().getFullYear();
 		margin-top: 0.75rem;
 	}
 
+	.support {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem 1.75rem;
+		margin-top: 2.75rem;
+		font-size: 0.875rem;
+	}
+
+	.support a,
+	.legal a {
+		color: var(--color-muted);
+		text-decoration: none;
+	}
+
+	.support a:hover,
+	.legal a:hover {
+		color: var(--color-accent);
+	}
+
 	.legal {
 		display: flex;
 		justify-content: space-between;
 		gap: 0.5rem 1.5rem;
-		margin-top: 2.75rem;
+		margin-top: 1.5rem;
 		padding: 1.25rem 0 1.5rem;
 		border-top: 1px solid var(--color-line);
 		color: var(--color-muted);
@@ -109,15 +132,6 @@ const year = new Date().getFullYear();
 
 	.legal p {
 		margin: 0;
-	}
-
-	.legal a {
-		color: inherit;
-		text-decoration: none;
-	}
-
-	.legal a:hover {
-		color: var(--color-accent);
 	}
 
 	.legal-tagline {
@@ -184,6 +198,11 @@ const year = new Date().getFullYear();
 
 		.cta {
 			grid-area: cta;
+		}
+
+		.support {
+			justify-content: flex-start;
+			margin-top: 2rem;
 		}
 
 		.legal {
