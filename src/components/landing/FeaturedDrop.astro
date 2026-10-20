@@ -1,0 +1,78 @@
+---
+import { featured } from '../../data/products';
+import { site } from '../../data/site';
+import { formatPrice } from '../../lib/format';
+---
+
+<section id="destacados" class="section" aria-labelledby="featured-title">
+	<header class="section-head">
+		<h2 id="featured-title" class="section-title">Destacados</h2>
+		<p class="eyebrow">Uno de cada línea</p>
+	</header>
+	<ul class="products">
+		{featured.map((product) => (
+			<li>
+				<a class="product" href={site.whatsapp} target="_blank" rel="noopener" aria-label={`Pedir ${product.name} por WhatsApp`}>
+					<img src={product.image} alt="" loading="lazy" decoding="async" />
+					<span class="name">{product.name}</span>
+					<span class="meta">{product.category} · {formatPrice(product.price)}</span>
+				</a>
+			</li>
+		))}
+	</ul>
+</section>
+
+<style>
+	.products {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 4px;
+	}
+
+	.product {
+		display: grid;
+		gap: 0.5rem;
+		padding-bottom: 1rem;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	img {
+		width: 100%;
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		background: var(--color-surface);
+	}
+
+	.product:hover img,
+	.product:focus-visible img {
+		outline: 3px solid var(--color-accent);
+		outline-offset: -3px;
+	}
+
+	.product:focus-visible {
+		outline: none;
+	}
+
+	.name {
+		font: 900 clamp(1.5rem, 2.5vw, 2rem)/0.9 var(--font-display);
+		font-stretch: condensed;
+		text-transform: uppercase;
+	}
+
+	.meta {
+		color: var(--color-accent);
+		font: 700 0.7rem/1 var(--font-body);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	@media (max-width: 760px) {
+		.products {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+</style>

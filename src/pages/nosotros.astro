@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Nosotros · Venkra">
+	<main class="section about">
+		<header class="section-head">
+			<h1 class="section-title">Nosotros</h1>
+			<p class="eyebrow">{site.tagline}</p>
+		</header>
+		<p>
+			VENKRA vive los planes que se cruzan en su camino, disfruta de los detalles que se esconden detrás de cada
+			rincón de la ciudad volviéndose uno con esta. Disfruta de cada burbuja que sale de esta cervecita en ese
+			parche favorito, de ese tema con letra genuina, Jazz, Blues y Rock n Roll.
+		</p>
+		<p>
+			Se siente tan seguro que si lanza una moneda sabrá que el resultado será a su favor, se siente tan fuerte
+			incluso cuando el viento está en su contra porque sabe que es el momento perfecto para abrir sus alas y
+			levantar su poderoso vuelo.
+		</p>
+		<a class="stamp" href="/#catalogo">Ver el catálogo</a>
+	</main>
+</BaseLayout>
+
+<style>
+	/* Clear the fixed header, since this page has no hero under it. */
+	.about {
+		padding-top: calc(var(--header-height) + clamp(3rem, 6vw, 5rem));
+	}
+
+	.about > p {
+		max-width: 40rem;
+		margin: 0 0 1.5rem;
+		color: var(--color-muted);
+		font-size: 1.125rem;
+		line-height: 1.7;
+	}
+
+	.stamp {
+		margin-top: 1rem;
+	}
+</style>

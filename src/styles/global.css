@@ -27,6 +27,40 @@ body {
 	font-family: var(--font-body);
 }
 
+/* A landing section: centred, padded, and clear of the fixed header when linked to. */
+.section {
+	scroll-margin-top: var(--header-height);
+	max-width: var(--page-max);
+	margin: 0 auto;
+	padding: clamp(4rem, 8vw, 6rem) var(--page-gutter);
+	box-sizing: border-box;
+}
+
+/* A section's big title, with an optional accent line beside it. */
+.section-head {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.section-title {
+	margin: 0;
+	font: 900 clamp(3rem, 9vw, 7rem)/0.85 var(--font-display);
+	font-stretch: condensed;
+	text-transform: uppercase;
+}
+
+.eyebrow {
+	margin: 0;
+	color: var(--color-accent);
+	font: 700 0.8rem/1 var(--font-body);
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+}
+
 /* How much of a stamp's box shows, 0 to 1. Registered so it can be animated;
    the header starts its stamps at 0 and flickers them on. */
 @property --on {
@@ -38,7 +72,7 @@ body {
 /* Square, outlined labels like stamped tags, shared by the header and the footer.
    A component can resize them with --stamp-size. */
 .stamp {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	gap: 0.45rem;
 	height: var(--stamp-size, 2.4rem);
