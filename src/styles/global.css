@@ -52,7 +52,6 @@ body {
 	text-transform: uppercase;
 	box-sizing: border-box;
 	cursor: pointer;
-	transition: background 0.2s steps(3), color 0.2s steps(3), border-color 0.2s steps(3);
 }
 
 .stamp:hover {
