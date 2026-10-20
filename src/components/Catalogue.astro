@@ -1,24 +1,23 @@
 ---
-// Option I: a mosaic that fits the four categories in one screen, with the
-// first one as the big tile.
-import { categories } from '../../data/categories';
+// The four categories in one screen as a mosaic, with the first as the big tile.
+import { categories } from '../data/categories';
 const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
-<section class="cat-i" aria-labelledby="cat-i-title">
-	<header class="cat-i-head">
-		<h2 id="cat-i-title">Catálogo</h2>
+<section class="catalogue" aria-labelledby="catalogue-title">
+	<header class="catalogue-head">
+		<h2 id="catalogue-title">Catálogo</h2>
 		<p>Urban denim · Handcrafted · Original</p>
 	</header>
-	<ul class="cat-i-grid">
+	<ul class="catalogue-grid">
 		{categories.map((c, i) => (
-			<li class={`cat-i-cell cat-i-cell-${i + 1}`}>
+			<li class={`catalogue-cell catalogue-cell-${i + 1}`}>
 				<a href={`/catalogo/${c.id}`}>
 					<img src={c.image} alt="" loading="lazy" decoding="async" />
-					<span class="cat-i-index">{pad(i + 1)}</span>
-					<span class="cat-i-bottom">
-						<span class="cat-i-name">{c.name}</span>
-						<span class="cat-i-price">{c.count} ref. · desde {c.fromPrice}</span>
+					<span class="catalogue-index">{pad(i + 1)}</span>
+					<span class="catalogue-bottom">
+						<span class="catalogue-name">{c.name}</span>
+						<span class="catalogue-price">{c.count} ref. · desde {c.fromPrice}</span>
 					</span>
 				</a>
 			</li>
@@ -27,14 +26,14 @@ const pad = (n: number) => String(n).padStart(2, '0');
 </section>
 
 <style>
-	.cat-i {
+	.catalogue {
 		max-width: 90rem;
 		margin: 0 auto;
 		padding: clamp(4rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
 		color: #fff;
 	}
 
-	.cat-i-head {
+	.catalogue-head {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
@@ -43,14 +42,14 @@ const pad = (n: number) => String(n).padStart(2, '0');
 		margin-bottom: 1.5rem;
 	}
 
-	.cat-i-head h2 {
+	.catalogue-head h2 {
 		margin: 0;
 		font: 900 clamp(3rem, 9vw, 7rem)/0.85 var(--font-display);
 		font-stretch: condensed;
 		text-transform: uppercase;
 	}
 
-	.cat-i-head p {
+	.catalogue-head p {
 		margin: 0;
 		color: #efe3c8;
 		font: 700 0.8rem/1 system-ui, sans-serif;
@@ -58,7 +57,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 		text-transform: uppercase;
 	}
 
-	.cat-i-grid {
+	.catalogue-grid {
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -68,16 +67,16 @@ const pad = (n: number) => String(n).padStart(2, '0');
 		gap: 4px;
 	}
 
-	.cat-i-cell-1 {
+	.catalogue-cell-1 {
 		grid-column: span 2;
 		grid-row: span 2;
 	}
 
-	.cat-i-cell-2 {
+	.catalogue-cell-2 {
 		grid-column: span 2;
 	}
 
-	.cat-i-cell a {
+	.catalogue-cell a {
 		position: relative;
 		display: block;
 		height: 100%;
@@ -87,7 +86,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 		text-decoration: none;
 	}
 
-	.cat-i-cell img {
+	.catalogue-cell img {
 		position: absolute;
 		inset: 0;
 		width: 100%;
@@ -96,23 +95,23 @@ const pad = (n: number) => String(n).padStart(2, '0');
 		transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
 	}
 
-	.cat-i-cell a::after {
+	.catalogue-cell a::after {
 		content: '';
 		position: absolute;
 		inset: 0;
 		background: linear-gradient(to top, rgb(0 0 0 / 0.85), transparent 55%);
 	}
 
-	.cat-i-cell a:hover img {
+	.catalogue-cell a:hover img {
 		transform: scale(1.04);
 	}
 
-	.cat-i-cell a:hover {
+	.catalogue-cell a:hover {
 		outline: 3px solid #efe3c8;
 		outline-offset: -3px;
 	}
 
-	.cat-i-index {
+	.catalogue-index {
 		position: absolute;
 		z-index: 1;
 		top: 0;
@@ -122,7 +121,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 		font: 900 1.1rem/1 var(--font-display);
 	}
 
-	.cat-i-bottom {
+	.catalogue-bottom {
 		position: absolute;
 		z-index: 1;
 		left: clamp(0.75rem, 2vw, 1.5rem);
@@ -132,17 +131,17 @@ const pad = (n: number) => String(n).padStart(2, '0');
 		gap: 0.5rem;
 	}
 
-	.cat-i-name {
+	.catalogue-name {
 		font: 900 clamp(1.75rem, 3.5vw, 3rem)/0.9 var(--font-display);
 		font-stretch: condensed;
 		text-transform: uppercase;
 	}
 
-	.cat-i-cell-1 .cat-i-name {
+	.catalogue-cell-1 .catalogue-name {
 		font-size: clamp(2.75rem, 7vw, 6rem);
 	}
 
-	.cat-i-price {
+	.catalogue-price {
 		color: #efe3c8;
 		font: 700 0.7rem/1 system-ui, sans-serif;
 		letter-spacing: 0.2em;
@@ -150,20 +149,20 @@ const pad = (n: number) => String(n).padStart(2, '0');
 	}
 
 	@media (max-width: 760px) {
-		.cat-i-grid {
+		.catalogue-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			grid-template-rows: 22rem repeat(2, 14rem);
 		}
 
-		.cat-i-cell-1 {
+		.catalogue-cell-1 {
 			grid-row: span 1;
 		}
 
-		.cat-i-cell-2 {
+		.catalogue-cell-2 {
 			grid-column: span 1;
 		}
 
-		.cat-i-cell-4 {
+		.catalogue-cell-4 {
 			grid-column: span 2;
 		}
 	}
