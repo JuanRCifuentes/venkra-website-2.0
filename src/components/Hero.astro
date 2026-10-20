@@ -69,8 +69,9 @@ import Logo from '../assets/logo-full.svg';
 <style>
 	.hero {
 		position: relative;
+		/* Fill the screen even behind Safari's status bar and toolbars. */
 		height: 100vh;
-		height: 100svh;
+		height: 100lvh;
 		overflow: hidden;
 		background: #000;
 	}
@@ -119,9 +120,17 @@ import Logo from '../assets/logo-full.svg';
 		--hero-hole: 120vmax;
 	}
 
+	/* Keep the logo and arrow in the part of the screen that is never
+	   covered by browser bars. */
 	.hero-content {
 		position: absolute;
-		inset: 0;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 100vh;
+		height: 100svh;
+		box-sizing: border-box;
+		padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -215,7 +224,7 @@ import Logo from '../assets/logo-full.svg';
 
 	.hero-scroll {
 		position: absolute;
-		bottom: 1.5rem;
+		bottom: calc(1.5rem + env(safe-area-inset-bottom));
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
