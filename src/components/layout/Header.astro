@@ -1,0 +1,448 @@
+---
+import Eagle from '../../assets/eagle.svg';
+import { site } from '../../data/site';
+
+interface Props {
+	/** Selector of a big logo on the page, like the hero's. The header's eagle waits until that logo's eagle has scrolled under the header. */
+	heroLogo?: string;
+}
+
+const { heroLogo } = Astro.props;
+
+const links = [
+	{ label: 'Catálogo', href: '/#catalogo' },
+	{ label: 'Nosotros', href: '/nosotros' },
+];
+const menuLinks = [
+	...links,
+	{ label: 'Instagram', href: site.instagram, external: true },
+	{ label: 'Escríbenos', href: site.whatsapp, external: true, accent: true },
+];
+const num = (i: number) => String(i + 1).padStart(2, '0');
+// Each tag's box flickers on after its own delay, in a scattered order like the logo's letters.
+const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
+---
+
+<header class="site-header" data-hero-logo={heroLogo}>
+	<div class="bar">
+		<nav class="nav" aria-label="Principal">
+			{links.map((link, i) => (
+				<a class="stamp" href={link.href} style={flicker(i)}><span class="num">{num(i)}</span>{link.label}</a>
+			))}
+		</nav>
+		<button class="menu-button stamp" type="button" aria-expanded="false" aria-controls="site-menu">
+			<span class="menu-bars" aria-hidden="true"></span>
+			<span class="menu-label">Menú</span>
+		</button>
+		<a class="brand" href="/" aria-label="Venkra, inicio">
+			<Eagle aria-hidden="true" />
+		</a>
+		<div class="actions">
+			<a class="stamp icon" style={flicker(links.length)} href={site.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+				<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16ZM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0Zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z" />
+				</svg>
+			</a>
+			<a class="stamp cta" style={flicker(links.length + 1)} href={site.whatsapp} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+				<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Zm-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88a9.83 9.83 0 0 1 9.88 9.89c0 5.45-4.44 9.88-9.88 9.88Zm8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4Z" />
+				</svg>
+				<span>Escríbenos</span>
+			</a>
+		</div>
+	</div>
+	<div class="menu" id="site-menu" hidden>
+		<nav aria-label="Menú">
+			{menuLinks.map((link, i) => (
+				<a
+					class:list={['menu-link', { accent: link.accent }]}
+					href={link.href}
+					target={link.external ? '_blank' : undefined}
+					rel={link.external ? 'noopener' : undefined}
+					style={`--i:${i}`}
+				><span class="num">{num(i)}</span>{link.label}</a>
+			))}
+		</nav>
+	</div>
+</header>
+
+<script is:inline type="module">
+	const header = document.querySelector('.site-header');
+	const logo = header.dataset.heroLogo && document.querySelector(header.dataset.heroLogo);
+
+	// Past this point the bar fades in and the tags flicker on their boxes.
+	const SOLID_AT = 60;
+
+	// The header's eagle flickers on as the hero logo's eagle slides under the
+	// header, and off as it comes back out. The eagle is the top part of the
+	// logo, by the logo file's viewBox.
+	const EAGLE_BOTTOM = 702 / 1841;
+	let eagleUnder = 0;
+	const measure = () => {
+		if (!logo) return;
+		const box = logo.getBoundingClientRect();
+		eagleUnder = box.top + scrollY + box.height * EAGLE_BOTTOM - header.offsetHeight;
+	};
+
+	// Scrolling only compares numbers and writes what changed.
+	const state = {};
+	const set = (key, value) => state[key] !== value && ((state[key] = value), (header.dataset[key] = value));
+	const update = () => {
+		queued = false;
+		set('solid', scrollY > SOLID_AT);
+		set('eagle', !logo || scrollY > eagleUnder);
+	};
+
+	let queued = false;
+	const queue = () => queued || ((queued = true), requestAnimationFrame(update));
+	addEventListener('scroll', queue, { passive: true });
+	new ResizeObserver(() => (measure(), queue())).observe(document.documentElement);
+	measure();
+	update();
+
+	const button = header.querySelector('.menu-button');
+	const menu = header.querySelector('.menu');
+	const setOpen = (open) => {
+		button.setAttribute('aria-expanded', String(open));
+		menu.hidden = !open;
+		header.dataset.menuOpen = String(open);
+		document.documentElement.style.overflow = open ? 'hidden' : '';
+	};
+	button.addEventListener('click', () => setOpen(menu.hidden));
+	menu.addEventListener('click', (event) => event.target.closest('a') && setOpen(false));
+	addEventListener('keydown', (event) => event.key === 'Escape' && setOpen(false));
+</script>
+
+<style>
+	.site-header {
+		--brand-height: 2.2rem;
+		position: fixed;
+		inset: 0 0 auto;
+		z-index: 50;
+		height: var(--header-height);
+		color: var(--color-fg);
+	}
+
+	/* A soft scrim keeps the tags readable over the video, then a solid bar fades in. */
+	.site-header::before,
+	.site-header::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+	}
+
+	.site-header::before {
+		height: 160%;
+		background: linear-gradient(rgb(0 0 0 / 0.4), transparent);
+	}
+
+	.site-header::after {
+		background: var(--color-bg);
+		border-bottom: 1px solid rgb(255 255 255 / 0.12);
+		opacity: 0;
+	}
+
+	/* Only opacity changes, so the fade runs on the compositor. */
+	.site-header::before,
+	.site-header::after {
+		transition: opacity 0.35s var(--ease-out);
+	}
+
+	.site-header[data-solid='true']::before {
+		opacity: 0;
+	}
+
+	.site-header[data-solid='true']::after {
+		opacity: 1;
+	}
+
+	/* Over the open menu, so the menu's close button stays on top. */
+	.site-header[data-menu-open='true'] {
+		z-index: 70;
+	}
+
+	.bar {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-areas: 'nav actions';
+		position: relative;
+		align-items: center;
+		gap: 1rem;
+		height: 100%;
+		max-width: var(--page-max);
+		margin: 0 auto;
+		padding: 0 var(--page-gutter);
+		box-sizing: border-box;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	:is(a, button):focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+	}
+
+	.nav {
+		grid-area: nav;
+		display: flex;
+	}
+
+	/* How much of a tag's box shows, 0 to 1. Registered so it can be animated. */
+	@property --on {
+		syntax: '<number>';
+		inherits: false;
+		initial-value: 0;
+	}
+
+	/* Square, outlined labels that sit edge to edge like stamped tags. Over the
+	   hero they are bare text, so the first look stays clean; once the bar has
+	   faded in, their boxes flicker on like the logo in the intro. */
+	.stamp {
+		--on: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		height: 2.4rem;
+		padding: 0 1rem;
+		margin-left: -1px;
+		border: 1px solid color-mix(in srgb, rgb(255 255 255 / 0.35) calc(var(--on) * 100%), transparent);
+		background: transparent;
+		color: var(--color-fg);
+		font: 700 0.95rem/1 var(--font-display);
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		box-sizing: border-box;
+		cursor: pointer;
+		transition: background 0.2s steps(3), color 0.2s steps(3), border-color 0.2s steps(3);
+	}
+
+	.site-header[data-solid='true'] .stamp {
+		--on: 1;
+		animation: stamp-flicker 0.6s steps(1) both;
+		animation-delay: var(--delay, 0s);
+	}
+
+	@keyframes stamp-flicker {
+		0% { --on: 0; }
+		8% { --on: 1; }
+		12%, 30% { --on: 0; }
+		34% { --on: 0.8; }
+		38% { --on: 0.1; }
+		55%, 64%, 100% { --on: 1; }
+		60% { --on: 0.3; }
+	}
+
+	.stamp:hover {
+		background: var(--color-fg);
+		border-color: var(--color-fg);
+		color: var(--color-bg);
+	}
+
+	.num {
+		font: 600 0.65rem/1 var(--font-body);
+		letter-spacing: 0.05em;
+		opacity: 0.6;
+	}
+
+	/* The eagle link, pinned to the exact centre of the bar, outside the grid. On the landing
+	   page it flickers on once the hero logo's eagle has scrolled under the header. */
+	.brand {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: calc(var(--brand-height) * 1331 / 702);
+		height: var(--brand-height);
+		translate: -50% -50%;
+	}
+
+	.brand :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		filter: drop-shadow(0 0 5px #000);
+	}
+
+	/* Like the tags, the eagle flickers on with the logo's intro timing. */
+	.site-header:not([data-eagle='true']) .brand {
+		visibility: hidden;
+	}
+
+	.site-header[data-eagle='true'] .brand {
+		animation: eagle-flicker 0.6s steps(1) both;
+	}
+
+	@keyframes eagle-flicker {
+		0% { opacity: 0; }
+		8% { opacity: 1; }
+		12%, 30% { opacity: 0; }
+		34% { opacity: 0.8; }
+		38% { opacity: 0.1; }
+		55%, 64%, 100% { opacity: 1; }
+		60% { opacity: 0.3; }
+	}
+
+	.actions {
+		grid-area: actions;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.icon {
+		width: 2.4rem;
+		padding: 0;
+		justify-content: center;
+	}
+
+	.stamp svg {
+		width: 1.1rem;
+		height: 1.1rem;
+	}
+
+	.cta {
+		border-color: color-mix(in srgb, var(--color-accent) calc(var(--on) * 100%), transparent);
+		background: color-mix(in srgb, var(--color-accent) calc(var(--on) * 100%), transparent);
+		color: color-mix(in srgb, var(--color-bg) calc(var(--on) * 100%), var(--color-accent));
+	}
+
+	.cta svg {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	.site-header:not([data-solid='true']) .stamp:hover {
+		background: transparent;
+		border-color: transparent;
+		color: var(--color-accent);
+	}
+
+	.menu-button {
+		grid-area: nav;
+		justify-self: start;
+		display: none;
+		margin: 0;
+	}
+
+	.menu-bars,
+	.menu-bars::before {
+		display: block;
+		width: 1.1rem;
+		height: 2px;
+		background: currentColor;
+		transition: transform 0.2s steps(3);
+	}
+
+	.menu-bars {
+		position: relative;
+		transform: translateY(-3px);
+	}
+
+	.menu-bars::before {
+		content: '';
+		position: absolute;
+		top: 6px;
+	}
+
+	[data-menu-open='true'] .menu-bars {
+		transform: rotate(45deg);
+	}
+
+	[data-menu-open='true'] .menu-bars::before {
+		transform: translateY(-6px) rotate(-90deg);
+	}
+
+	/* Full screen menu on phones: huge condensed links that step in one by one. */
+	.menu {
+		position: fixed;
+		inset: 0;
+		z-index: -2;
+		display: flex;
+		align-items: flex-end;
+		padding: 7rem var(--page-gutter) 3rem;
+		background: var(--color-bg);
+	}
+
+	.menu[hidden] {
+		display: none;
+	}
+
+	.menu nav {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.menu-link {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		padding: 0.5rem 0;
+		border-bottom: 1px solid rgb(255 255 255 / 0.15);
+		font: 800 clamp(2.25rem, 11.5vw, 4.5rem)/0.95 var(--font-display);
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		animation: menu-in 0.3s steps(3) both;
+		animation-delay: calc(var(--i) * 70ms);
+	}
+
+	.menu-link .num {
+		font-size: 0.8rem;
+	}
+
+	.menu-link.accent {
+		color: var(--color-accent);
+	}
+
+	@keyframes menu-in {
+		from {
+			opacity: 0;
+			transform: translateY(1rem);
+		}
+	}
+
+	@media (max-width: 760px) {
+		.site-header {
+			--brand-height: 1.8rem;
+		}
+
+		.nav,
+		.icon,
+		.cta span {
+			display: none;
+		}
+
+		.menu-button {
+			display: flex;
+		}
+
+		.cta {
+			width: 2.4rem;
+			padding: 0;
+			justify-content: center;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.menu-label {
+			display: none;
+		}
+
+		.menu-button {
+			width: 2.4rem;
+			padding: 0;
+			justify-content: center;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.menu-link,
+		.site-header[data-eagle='true'] .brand,
+		.site-header[data-solid='true'] .stamp {
+			animation: none;
+		}
+	}
+</style>
