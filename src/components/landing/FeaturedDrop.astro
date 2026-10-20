@@ -1,7 +1,6 @@
 ---
-import { categories } from '../../data/categories';
 import { featured } from '../../data/products';
-import { formatPrice } from '../../lib/format';
+import ProductTile from '../catalogue/ProductTile.astro';
 ---
 
 <section id="destacados" class="section" aria-labelledby="featured-title">
@@ -11,13 +10,7 @@ import { formatPrice } from '../../lib/format';
 	</header>
 	<ul class="products">
 		{featured.map((product) => (
-			<li>
-				<a class="product" href={`/catalogo/${product.category}/${product.id}`}>
-					<img src={product.images[0]} alt="" loading="lazy" decoding="async" />
-					<span class="name">{product.name}</span>
-					<span class="meta">{categories.find((category) => category.id === product.category)!.name} · {formatPrice(product.price)}</span>
-				</a>
-			</li>
+			<li><ProductTile product={product} /></li>
 		))}
 	</ul>
 </section>
@@ -32,42 +25,8 @@ import { formatPrice } from '../../lib/format';
 		gap: 4px;
 	}
 
-	.product {
-		display: grid;
-		gap: 0.5rem;
-		padding-bottom: 1rem;
-		color: inherit;
-		text-decoration: none;
-	}
-
-	img {
-		width: 100%;
+	li {
 		aspect-ratio: 4 / 5;
-		object-fit: cover;
-		background: var(--color-surface);
-	}
-
-	.product:hover img,
-	.product:focus-visible img {
-		outline: 3px solid var(--color-accent);
-		outline-offset: -3px;
-	}
-
-	.product:focus-visible {
-		outline: none;
-	}
-
-	.name {
-		font: 900 clamp(1.5rem, 2.5vw, 2rem)/0.9 var(--font-display);
-		font-stretch: condensed;
-		text-transform: uppercase;
-	}
-
-	.meta {
-		color: var(--color-accent);
-		font: 700 0.7rem/1 var(--font-body);
-		letter-spacing: 0.2em;
-		text-transform: uppercase;
 	}
 
 	@media (max-width: 760px) {
