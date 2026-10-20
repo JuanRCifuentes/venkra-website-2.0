@@ -1,0 +1,167 @@
+---
+// Option A: editorial index. One large row per category, alternating sides.
+import { categories } from '../../data/categories';
+---
+
+<section class="cat-a" aria-labelledby="cat-a-title">
+	<header class="cat-a-head">
+		<p class="cat-a-kicker">Catálogo · {String(categories.length).padStart(2, '0')} líneas</p>
+		<h2 id="cat-a-title">La colección</h2>
+	</header>
+	<ol class="cat-a-list">
+		{categories.map((c, i) => (
+			<li class="cat-a-row">
+				<a href={`/catalogo/${c.id}`}>
+					<span class="cat-a-index">{String(i + 1).padStart(2, '0')}</span>
+					<span class="cat-a-media">
+						<img src={c.image} alt="" loading="lazy" decoding="async" />
+					</span>
+					<span class="cat-a-text">
+						<span class="cat-a-name">{c.name}</span>
+						<span class="cat-a-desc">{c.description}</span>
+						<span class="cat-a-meta">{c.count} referencias · desde {c.fromPrice}</span>
+						<span class="cat-a-cta">Ver colección <span aria-hidden="true">→</span></span>
+					</span>
+				</a>
+			</li>
+		))}
+	</ol>
+</section>
+
+<style>
+	.cat-a {
+		padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 5vw, 4rem);
+		color: #fff;
+	}
+
+	.cat-a-head {
+		max-width: 80rem;
+		margin: 0 auto clamp(3rem, 8vw, 6rem);
+		border-bottom: 2px solid #fff;
+		padding-bottom: 1rem;
+	}
+
+	.cat-a-kicker {
+		margin: 0 0 0.5rem;
+		color: #efe3c8;
+		font: 700 0.8rem/1 system-ui, sans-serif;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+	}
+
+	.cat-a-head h2 {
+		margin: 0;
+		font: 900 clamp(3.5rem, 13vw, 10rem)/0.85 var(--font-display);
+		font-stretch: condensed;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+	}
+
+	.cat-a-list {
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		max-width: 80rem;
+		display: grid;
+		gap: clamp(4rem, 10vw, 8rem);
+	}
+
+	.cat-a-row a {
+		display: grid;
+		grid-template-columns: auto minmax(0, 7fr) minmax(0, 5fr);
+		gap: clamp(1rem, 3vw, 3rem);
+		align-items: end;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.cat-a-row:nth-child(even) a {
+		grid-template-columns: auto minmax(0, 5fr) minmax(0, 7fr);
+	}
+
+	.cat-a-row:nth-child(even) .cat-a-media {
+		order: 3;
+	}
+
+	.cat-a-index {
+		align-self: start;
+		font: 900 clamp(1rem, 2vw, 1.5rem)/1 var(--font-display);
+		color: #efe3c8;
+		writing-mode: vertical-rl;
+		letter-spacing: 0.2em;
+	}
+
+	.cat-a-media {
+		display: block;
+		aspect-ratio: 4 / 5;
+		overflow: hidden;
+		background: #111;
+	}
+
+	.cat-a-media img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+	}
+
+	.cat-a-row a:hover img {
+		transform: scale(1.04);
+	}
+
+	.cat-a-text {
+		display: grid;
+		gap: 1rem;
+		padding-bottom: 0.5rem;
+	}
+
+	.cat-a-name {
+		font: 900 clamp(2.5rem, 7vw, 6rem)/0.85 var(--font-display);
+		font-stretch: condensed;
+		text-transform: uppercase;
+	}
+
+	.cat-a-desc {
+		max-width: 28rem;
+		color: #9a9a9a;
+		font: 400 1rem/1.5 system-ui, sans-serif;
+	}
+
+	.cat-a-meta {
+		color: #efe3c8;
+		font: 700 0.75rem/1 system-ui, sans-serif;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.cat-a-cta {
+		justify-self: start;
+		margin-top: 0.5rem;
+		padding-bottom: 0.25rem;
+		border-bottom: 3px solid #fff;
+		font: 800 1rem/1 system-ui, sans-serif;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+	}
+
+	.cat-a-row a:hover .cat-a-cta {
+		border-color: #efe3c8;
+		color: #efe3c8;
+	}
+
+	@media (max-width: 720px) {
+		.cat-a-row a,
+		.cat-a-row:nth-child(even) a {
+			grid-template-columns: auto minmax(0, 1fr);
+		}
+
+		.cat-a-row:nth-child(even) .cat-a-media {
+			order: 0;
+		}
+
+		.cat-a-text {
+			grid-column: 2;
+		}
+	}
+</style>

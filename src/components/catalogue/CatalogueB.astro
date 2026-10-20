@@ -1,0 +1,154 @@
+---
+// Option B: poster grid. Tall tiles with the name stamped over the photo.
+import { categories } from '../../data/categories';
+---
+
+<section class="cat-b" aria-labelledby="cat-b-title">
+	<header class="cat-b-head">
+		<h2 id="cat-b-title">Catálogo</h2>
+		<p>Urban denim · Handcrafted · Original</p>
+	</header>
+	<ul class="cat-b-grid">
+		{categories.map((c, i) => (
+			<li>
+				<a class="cat-b-tile" href={`/catalogo/${c.id}`}>
+					<img src={c.image} alt="" loading="lazy" decoding="async" />
+					<span class="cat-b-top">
+						<span>{String(i + 1).padStart(2, '0')}</span>
+						<span>{c.count} ref.</span>
+					</span>
+					<span class="cat-b-bottom">
+						<span class="cat-b-name">{c.name}</span>
+						<span class="cat-b-price">Desde {c.fromPrice} <span aria-hidden="true">→</span></span>
+					</span>
+				</a>
+			</li>
+		))}
+	</ul>
+</section>
+
+<style>
+	.cat-b {
+		padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 3vw, 2rem);
+		color: #fff;
+	}
+
+	.cat-b-head {
+		max-width: 90rem;
+		margin: 0 auto 2rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+	}
+
+	.cat-b-head h2 {
+		margin: 0;
+		font: 900 clamp(3rem, 10vw, 8rem)/0.85 var(--font-display);
+		font-stretch: condensed;
+		text-transform: uppercase;
+	}
+
+	.cat-b-head p {
+		margin: 0;
+		color: #efe3c8;
+		font: 700 0.8rem/1 system-ui, sans-serif;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+	}
+
+	.cat-b-grid {
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		max-width: 90rem;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 4px;
+	}
+
+	.cat-b-tile {
+		position: relative;
+		display: block;
+		aspect-ratio: 4 / 5;
+		overflow: hidden;
+		background: #111;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.cat-b-tile img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1), filter 0.3s steps(3);
+	}
+
+	/* Darken the bottom so the name always reads. */
+	.cat-b-tile::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to top, rgb(0 0 0 / 0.85), transparent 55%);
+	}
+
+	.cat-b-top,
+	.cat-b-bottom {
+		position: absolute;
+		left: clamp(1rem, 3vw, 2rem);
+		right: clamp(1rem, 3vw, 2rem);
+		z-index: 1;
+		display: flex;
+		justify-content: space-between;
+		font: 700 0.75rem/1 system-ui, sans-serif;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.cat-b-top {
+		top: clamp(1rem, 3vw, 2rem);
+		mix-blend-mode: difference;
+	}
+
+	.cat-b-bottom {
+		bottom: clamp(1rem, 3vw, 2rem);
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.cat-b-name {
+		font: 900 clamp(2.5rem, 7vw, 6rem)/0.85 var(--font-display);
+		font-stretch: condensed;
+		letter-spacing: 0;
+	}
+
+	.cat-b-price {
+		color: #efe3c8;
+	}
+
+	/* A hard cream frame snaps in on hover. */
+	.cat-b-tile:hover {
+		outline: 3px solid #efe3c8;
+		outline-offset: -3px;
+	}
+
+	@media (hover: hover) {
+		.cat-b-tile img {
+			filter: grayscale(1) contrast(1.15);
+		}
+
+		.cat-b-tile:hover img {
+			filter: none;
+			transform: scale(1.04);
+		}
+	}
+
+	@media (max-width: 640px) {
+		.cat-b-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>
