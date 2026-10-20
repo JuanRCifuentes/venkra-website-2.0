@@ -76,7 +76,10 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 
 	// Scrolling only compares numbers and writes what changed.
 	const state: Record<string, string> = {};
-	const set = (key: string, value: boolean) => state[key] !== String(value) && ((state[key] = String(value)), (header.dataset[key] = String(value)));
+	const set = (key: string, on: boolean) => {
+		const value = String(on);
+		if (state[key] !== value) state[key] = header.dataset[key] = value;
+	};
 	const update = () => {
 		queued = false;
 		set('solid', scrollY > SOLID_AT);
