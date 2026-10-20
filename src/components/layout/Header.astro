@@ -3,6 +3,7 @@ import Eagle from '../../assets/eagle.svg';
 import Instagram from '../../assets/icons/instagram.svg';
 import WhatsApp from '../../assets/icons/whatsapp.svg';
 import { site } from '../../data/site';
+import { padIndex } from '../../lib/format';
 
 interface Props {
 	/** Selector of a big logo on the page, like the hero's. The header's eagle waits until that logo's eagle has scrolled under the header. */
@@ -17,7 +18,6 @@ const menuLinks = [
 	{ label: 'Instagram', href: site.instagram, external: true },
 	{ label: 'Escríbenos', href: site.whatsapp, external: true, accent: true },
 ];
-const num = (i: number) => String(i + 1).padStart(2, '0');
 // Each tag's box flickers on after its own delay, in a scattered order like the logo's letters.
 const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 ---
@@ -26,7 +26,7 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 	<div class="bar">
 		<nav class="nav" aria-label="Principal">
 			{links.map((link, i) => (
-				<a class="stamp" href={link.href} style={flicker(i)}><span class="num">{num(i)}</span>{link.label}</a>
+				<a class="stamp" href={link.href} style={flicker(i)}><span class="num">{padIndex(i + 1)}</span>{link.label}</a>
 			))}
 		</nav>
 		<button class="menu-button stamp" type="button" aria-expanded="false" aria-controls="site-menu">
@@ -55,7 +55,7 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 					target={link.external ? '_blank' : undefined}
 					rel={link.external ? 'noopener' : undefined}
 					style={`--i:${i}`}
-				><span class="num">{num(i)}</span>{link.label}</a>
+				><span class="num">{padIndex(i + 1)}</span>{link.label}</a>
 			))}
 		</nav>
 	</div>
@@ -135,7 +135,7 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 
 	.site-header::after {
 		background: var(--color-bg);
-		border-bottom: 1px solid rgb(255 255 255 / 0.12);
+		border-bottom: 1px solid var(--color-line);
 		opacity: 0;
 	}
 
@@ -187,33 +187,12 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 		display: flex;
 	}
 
-	/* How much of a tag's box shows, 0 to 1. Registered so it can be animated. */
-	@property --on {
-		syntax: '<number>';
-		inherits: false;
-		initial-value: 0;
-	}
-
-	/* Square, outlined labels that sit edge to edge like stamped tags. Over the
-	   hero they are bare text, so the first look stays clean; once the bar has
-	   faded in, their boxes flicker on like the logo in the intro. */
+	/* The stamps (global.css) sit edge to edge. Over the hero they are bare
+	   text, so the first look stays clean; once the bar has faded in, their
+	   boxes flicker on like the logo in the intro. */
 	.stamp {
 		--on: 0;
-		display: flex;
-		align-items: center;
-		gap: 0.45rem;
-		height: 2.4rem;
-		padding: 0 1rem;
 		margin-left: -1px;
-		border: 1px solid color-mix(in srgb, rgb(255 255 255 / 0.35) calc(var(--on) * 100%), transparent);
-		background: transparent;
-		color: var(--color-fg);
-		font: 700 0.95rem/1 var(--font-display);
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-		box-sizing: border-box;
-		cursor: pointer;
-		transition: background 0.2s steps(3), color 0.2s steps(3), border-color 0.2s steps(3);
 	}
 
 	.site-header[data-solid='true'] .stamp {
@@ -232,16 +211,10 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 		60% { --on: 0.3; }
 	}
 
-	.stamp:hover {
-		background: var(--color-fg);
-		border-color: var(--color-fg);
-		color: var(--color-bg);
-	}
-
-	.num {
-		font: 600 0.65rem/1 var(--font-body);
-		letter-spacing: 0.05em;
-		opacity: 0.6;
+	.site-header:not([data-solid='true']) .stamp:hover {
+		background: transparent;
+		border-color: transparent;
+		color: var(--color-accent);
 	}
 
 	/* The eagle link, pinned to the exact centre of the bar, outside the grid. On the landing
@@ -285,34 +258,6 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 		grid-area: actions;
 		display: flex;
 		justify-content: flex-end;
-	}
-
-	.icon {
-		width: 2.4rem;
-		padding: 0;
-		justify-content: center;
-	}
-
-	.stamp :global(svg) {
-		width: 1.1rem;
-		height: 1.1rem;
-	}
-
-	.cta {
-		border-color: color-mix(in srgb, var(--color-accent) calc(var(--on) * 100%), transparent);
-		background: color-mix(in srgb, var(--color-accent) calc(var(--on) * 100%), transparent);
-		color: color-mix(in srgb, var(--color-bg) calc(var(--on) * 100%), var(--color-accent));
-	}
-
-	.cta :global(svg) {
-		width: 1rem;
-		height: 1rem;
-	}
-
-	.site-header:not([data-solid='true']) .stamp:hover {
-		background: transparent;
-		border-color: transparent;
-		color: var(--color-accent);
 	}
 
 	.menu-button {
@@ -376,7 +321,7 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 		align-items: baseline;
 		gap: 0.75rem;
 		padding: 0.5rem 0;
-		border-bottom: 1px solid rgb(255 255 255 / 0.15);
+		border-bottom: 1px solid var(--color-line);
 		font: 800 clamp(2.25rem, 11.5vw, 4.5rem)/0.95 var(--font-display);
 		letter-spacing: 0.02em;
 		text-transform: uppercase;
@@ -417,7 +362,6 @@ const flicker = (i: number) => `--delay:${[0.12, 0, 0.2, 0.06][i % 4]}s`;
 		.cta {
 			width: 2.4rem;
 			padding: 0;
-			justify-content: center;
 		}
 	}
 

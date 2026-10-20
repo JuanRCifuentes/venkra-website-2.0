@@ -3,11 +3,10 @@ import Eagle from '../../assets/eagle.svg';
 import Instagram from '../../assets/icons/instagram.svg';
 import WhatsApp from '../../assets/icons/whatsapp.svg';
 import { site } from '../../data/site';
+import { padIndex } from '../../lib/format';
 
-const { links } = site;
-const num = (i: number) => String(i + 1).padStart(2, '0');
+const { links, tagline, credit } = site;
 const year = new Date().getFullYear();
-const tagline = 'Faith is necessary for victory';
 ---
 
 <footer class="site-footer">
@@ -20,7 +19,7 @@ const tagline = 'Faith is necessary for victory';
 		<div class="links">
 			<nav class="pages" aria-label="Pie de página">
 				{links.map((link, i) => (
-					<a class="stamp page" href={link.href}><span class="num">{num(i)}</span>{link.label}</a>
+					<a class="stamp page" href={link.href}><span class="num">{padIndex(i + 1)}</span>{link.label}</a>
 				))}
 			</nav>
 			<a class="stamp icon" href={site.instagram} target="_blank" rel="noopener" aria-label="Instagram">
@@ -34,7 +33,7 @@ const tagline = 'Faith is necessary for victory';
 	</div>
 	<div class="legal">
 		<p>© {year} Venkra<span class="legal-tagline"> · {tagline}</span><span class="legal-rights">. Todos los derechos reservados.</span></p>
-		<a href="https://profile.juanrcifuentes.com" target="_blank" rel="noopener">Sitio por @juanrcifuentes</a>
+		<a href={credit.href} target="_blank" rel="noopener">{credit.label}</a>
 	</div>
 </footer>
 
@@ -42,10 +41,11 @@ const tagline = 'Faith is necessary for victory';
 	/* Desktop: the eagle and tagline centred over a row of stamped tags, like the
 	   header's. Mobile: one compact block with the eagle and Instagram on top. */
 	.site-footer {
+		--stamp-size: 2.75rem;
 		max-width: var(--page-max);
 		margin: 0 auto;
 		padding: 4.5rem var(--page-gutter) 0;
-		border-top: 1px solid rgb(255 255 255 / 0.15);
+		border-top: 1px solid var(--color-line);
 		box-sizing: border-box;
 	}
 
@@ -96,58 +96,13 @@ const tagline = 'Faith is necessary for victory';
 		margin-top: 0.75rem;
 	}
 
-	.stamp {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.6rem;
-		height: 2.75rem;
-		padding: 0 1.1rem;
-		border: 1px solid rgb(255 255 255 / 0.35);
-		color: var(--color-fg);
-		font: 700 0.95rem/1 var(--font-display);
-		letter-spacing: 0.16em;
-		text-decoration: none;
-		text-transform: uppercase;
-		box-sizing: border-box;
-		transition: background 0.2s steps(3), color 0.2s steps(3), border-color 0.2s steps(3);
-	}
-
-	.stamp:hover {
-		background: var(--color-fg);
-		border-color: var(--color-fg);
-		color: var(--color-bg);
-	}
-
-	.num {
-		font: 600 0.65rem/1 var(--font-body);
-		letter-spacing: 0.05em;
-		opacity: 0.6;
-	}
-
-	.icon {
-		width: 2.75rem;
-		padding: 0;
-	}
-
-	.stamp :global(svg) {
-		width: 1.1rem;
-		height: 1.1rem;
-	}
-
-	.cta {
-		border-color: var(--color-accent);
-		background: var(--color-accent);
-		color: var(--color-bg);
-	}
-
 	.legal {
 		display: flex;
 		justify-content: space-between;
 		gap: 0.5rem 1.5rem;
 		margin-top: 2.75rem;
 		padding: 1.25rem 0 1.5rem;
-		border-top: 1px solid rgb(255 255 255 / 0.15);
+		border-top: 1px solid var(--color-line);
 		color: var(--color-muted);
 		font-size: 0.8125rem;
 	}
