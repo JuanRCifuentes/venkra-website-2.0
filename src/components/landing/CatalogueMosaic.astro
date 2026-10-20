@@ -9,7 +9,7 @@ interface Props {
 const { categories } = Astro.props;
 ---
 
-<section class="catalogue" aria-labelledby="catalogue-title">
+<section id="catalogo" class="catalogue" aria-labelledby="catalogue-title">
 	<header class="head">
 		<h2 id="catalogue-title">Catálogo</h2>
 		<p>Urban denim · Handcrafted · Original</p>
@@ -25,6 +25,7 @@ const { categories } = Astro.props;
 
 <style>
 	.catalogue {
+		scroll-margin-top: var(--header-height);
 		max-width: var(--page-max);
 		margin: 0 auto;
 		padding: clamp(4rem, 8vw, 6rem) var(--page-gutter);

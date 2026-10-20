@@ -5,7 +5,7 @@ import CatalogueMosaic from '../components/landing/CatalogueMosaic.astro';
 import { categories } from '../data/categories';
 ---
 
-<BaseLayout>
+<BaseLayout heroLogo=".hero-logo > svg">
 	<link slot="head" rel="preload" href="/hero/poster.webp" as="image" type="image/webp" fetchpriority="high" />
 	<main>
 		<Hero />

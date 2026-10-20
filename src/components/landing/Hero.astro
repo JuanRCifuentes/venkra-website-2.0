@@ -3,7 +3,7 @@ import Logo from '../../assets/logo-full.svg';
 ---
 
 <section class="hero">
-	<noscript><style>.hero-curtain, .hero-ring { display: none; } .hero-logo g, .hero-scroll { opacity: 1 !important; animation: none !important; }</style></noscript>
+	<noscript><style>.hero-curtain, .hero-ring { display: none; } .hero-logo g, .hero-scroll { opacity: 1 !important; animation: none !important; } .hero ~ * { visibility: visible !important; }</style></noscript>
 	<video
 		class="hero-video"
 		autoplay
@@ -52,7 +52,12 @@ import Logo from '../../assets/logo-full.svg';
 			if (revealed) return;
 			revealed = true;
 			const wait = Math.max(0, MIN_MS - (performance.now() - start));
-			setTimeout(() => (hero.dataset.state = 'revealed'), wait);
+			setTimeout(() => {
+				hero.dataset.state = 'revealed';
+				// Once the curtain has opened and the rings have rippled out,
+				// drop them so their mask and grain are never drawn again.
+				setTimeout(() => hero.querySelectorAll('.hero-curtain, .hero-ring').forEach((el) => el.remove()), 1800);
+			}, wait);
 		};
 		if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
 			if (video.readyState >= 3) reveal();
@@ -63,6 +68,12 @@ import Logo from '../../assets/logo-full.svg';
 			poster.src = video.poster;
 		}
 		setTimeout(reveal, MAX_MS);
+
+		// Only decode the video while the hero is on screen.
+		new IntersectionObserver(([entry]) => {
+			if (!entry.isIntersecting) video.pause();
+			else if (revealed) video.play().catch(() => {});
+		}).observe(hero);
 	})();
 </script>
 
@@ -89,9 +100,13 @@ import Logo from '../../assets/logo-full.svg';
 		initial-value: 0px;
 	}
 
+	/* The curtain covers the site header too (z-index 50), with only the logo
+	   above it, until it opens. */
 	.hero-curtain {
 		position: absolute;
 		inset: 0;
+		z-index: 55;
+		pointer-events: none;
 		overflow: hidden;
 		background: var(--color-bg);
 		--hero-hole: 0px;
@@ -119,6 +134,18 @@ import Logo from '../../assets/logo-full.svg';
 		--hero-hole: 120vmax;
 	}
 
+	/* The rest of the page stays hidden until the curtain has opened. Phones
+	   can show more than the hero's height behind a see-through toolbar, so
+	   without this the next section peeks out under the curtain. */
+	.hero ~ :global(*) {
+		transition: visibility 0s 1.2s;
+	}
+
+	.hero:not([data-state='revealed']) ~ :global(*) {
+		visibility: hidden;
+		transition: none;
+	}
+
 	.hero-content {
 		position: absolute;
 		inset: 0;
@@ -126,6 +153,10 @@ import Logo from '../../assets/logo-full.svg';
 		justify-content: center;
 		align-items: center;
 		color: var(--color-fg);
+	}
+
+	.hero:not([data-state='revealed']) .hero-content {
+		z-index: 56;
 	}
 
 	.hero-logo {
@@ -223,7 +254,7 @@ import Logo from '../../assets/logo-full.svg';
 		align-items: center;
 		gap: 0.75rem;
 		font-weight: 900;
-		filter: drop-shadow(0 0 3px #000);
+		text-shadow: 0 0 3px #000;
 		opacity: 0;
 		transition: opacity 0.4s steps(3) 0.9s;
 	}
@@ -235,7 +266,9 @@ import Logo from '../../assets/logo-full.svg';
 	.hero-scroll-arrow {
 		width: 1.5rem;
 		height: 1.5rem;
+		filter: drop-shadow(0 0 3px #000);
 		animation: hero-scroll-jump 3s ease-in-out infinite;
+		will-change: transform;
 	}
 
 	@keyframes hero-scroll-jump {
