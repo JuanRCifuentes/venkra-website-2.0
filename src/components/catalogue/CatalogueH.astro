@@ -1,0 +1,206 @@
+---
+// Option H: category tabs. Big condensed tab names switch the product row
+// below them, without JavaScript (hidden radio buttons).
+import { categories, products } from '../../data/categories';
+---
+
+<section class="cat-h" aria-labelledby="cat-h-title">
+	<h2 id="cat-h-title">Catálogo</h2>
+	{categories.map((c, i) => (
+		<input class="cat-h-radio" type="radio" name="cat-h" id={`cat-h-${c.id}`} checked={i === 0} />
+	))}
+	<div class="cat-h-tabs">
+		{categories.map((c) => (
+			<label for={`cat-h-${c.id}`}>
+				{c.name}
+				<sup>{c.count}</sup>
+			</label>
+		))}
+	</div>
+	<div class="cat-h-panels">
+		{categories.map((c) => (
+			<div class="cat-h-panel">
+				<div class="cat-h-panel-head">
+					<p>{c.description}</p>
+					<a href={`/catalogo/${c.id}`}>Ver {c.name} <span aria-hidden="true">→</span></a>
+				</div>
+				<ul>
+					{products.filter((p) => p.category === c.id).map((p) => (
+						<li>
+							<a href={`/catalogo/${c.id}/${p.id}`}>
+								<span class="cat-h-thumb">
+									<img src={p.image} alt="" loading="lazy" decoding="async" />
+								</span>
+								<span class="cat-h-pname">{p.name}</span>
+								<span class="cat-h-price">{p.price}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		))}
+	</div>
+</section>
+
+<style>
+	.cat-h {
+		max-width: 90rem;
+		margin: 0 auto;
+		padding: clamp(4rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+		color: #fff;
+	}
+
+	.cat-h h2 {
+		margin: 0 0 1.5rem;
+		color: #efe3c8;
+		font: 700 0.8rem/1 system-ui, sans-serif;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+	}
+
+	.cat-h-radio {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.cat-h-tabs {
+		display: flex;
+		gap: clamp(1rem, 3vw, 2.5rem);
+		overflow-x: auto;
+		padding-bottom: 1rem;
+		border-bottom: 2px solid #fff;
+		scrollbar-width: none;
+	}
+
+	.cat-h-tabs label {
+		cursor: pointer;
+		color: #444;
+		font: 900 clamp(2.25rem, 6vw, 5rem)/0.9 var(--font-display);
+		font-stretch: condensed;
+		text-transform: uppercase;
+		white-space: nowrap;
+		transition: color 0.15s steps(2);
+	}
+
+	.cat-h-tabs label:hover {
+		color: #9a9a9a;
+	}
+
+	.cat-h-tabs sup {
+		margin-left: 0.2em;
+		font: 700 0.8rem/1 system-ui, sans-serif;
+		vertical-align: top;
+	}
+
+	.cat-h-panel {
+		display: none;
+		padding-top: 1.5rem;
+	}
+
+	/* The checked radio lights up its tab and shows its panel. */
+	.cat-h-radio:nth-of-type(1):checked ~ .cat-h-tabs label:nth-child(1),
+	.cat-h-radio:nth-of-type(2):checked ~ .cat-h-tabs label:nth-child(2),
+	.cat-h-radio:nth-of-type(3):checked ~ .cat-h-tabs label:nth-child(3),
+	.cat-h-radio:nth-of-type(4):checked ~ .cat-h-tabs label:nth-child(4) {
+		color: #fff;
+	}
+
+	.cat-h-radio:nth-of-type(1):checked ~ .cat-h-panels .cat-h-panel:nth-child(1),
+	.cat-h-radio:nth-of-type(2):checked ~ .cat-h-panels .cat-h-panel:nth-child(2),
+	.cat-h-radio:nth-of-type(3):checked ~ .cat-h-panels .cat-h-panel:nth-child(3),
+	.cat-h-radio:nth-of-type(4):checked ~ .cat-h-panels .cat-h-panel:nth-child(4) {
+		display: block;
+	}
+
+	.cat-h-radio:focus-visible ~ .cat-h-tabs {
+		outline: 2px solid #efe3c8;
+		outline-offset: 4px;
+	}
+
+	.cat-h-panel-head {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.cat-h-panel-head p {
+		margin: 0;
+		color: #9a9a9a;
+		font: 400 1rem/1.5 system-ui, sans-serif;
+	}
+
+	.cat-h-panel-head a {
+		padding-bottom: 0.25rem;
+		border-bottom: 3px solid currentColor;
+		color: #fff;
+		text-decoration: none;
+		font: 800 0.8rem/1 system-ui, sans-serif;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+	}
+
+	.cat-h-panel ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: minmax(10rem, calc((100% - 4 * 1rem) / 5));
+		gap: 1rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+	}
+
+	.cat-h-panel li {
+		scroll-snap-align: start;
+	}
+
+	.cat-h-panel li a {
+		display: grid;
+		gap: 0.3rem;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.cat-h-thumb {
+		display: block;
+		aspect-ratio: 4 / 5;
+		overflow: hidden;
+		background: #111;
+		margin-bottom: 0.4rem;
+	}
+
+	.cat-h-thumb img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s cubic-bezier(0.2, 0, 0, 1);
+	}
+
+	.cat-h-panel li a:hover img {
+		transform: scale(1.05);
+	}
+
+	.cat-h-pname {
+		font: 800 0.8rem/1.2 system-ui, sans-serif;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.cat-h-price {
+		color: #efe3c8;
+		font: 700 0.8rem/1 system-ui, sans-serif;
+	}
+
+	@media (max-width: 640px) {
+		.cat-h-panel ul {
+			grid-auto-columns: 44%;
+		}
+	}
+</style>
