@@ -1,0 +1,110 @@
+---
+import Logo from '../assets/logo-full.svg';
+---
+
+<section class="hero">
+	<video
+		class="hero-video"
+		autoplay
+		muted
+		loop
+		playsinline
+		disablepictureinpicture
+		preload="auto"
+		poster="/hero/poster.webp"
+		aria-hidden="true"
+	>
+		<!-- No source matches with reduced motion, so only the poster shows. -->
+		<source src="/hero/hero.av1.mp4" type='video/mp4; codecs="av01.0.04M.08"' media="(prefers-reduced-motion: no-preference)" />
+		<source src="/hero/hero.h264.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
+	</video>
+	<div class="hero-content">
+		<h1 class="hero-logo">
+			<Logo role="img" aria-label="Venkra" />
+		</h1>
+		<div class="hero-scroll" aria-hidden="true">
+			<span>SCROLL DOWN</span>
+			<svg class="hero-scroll-arrow" viewBox="0 0 16 16" fill="currentColor">
+				<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+			</svg>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		height: 100vh;
+		height: 100svh;
+		overflow: hidden;
+		background: #111820;
+	}
+
+	.hero-video {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.hero-content {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+	}
+
+	.hero-logo {
+		width: min(60%, 60rem);
+		margin: 0;
+		filter: drop-shadow(0 0 5px #000);
+	}
+
+	.hero-logo svg {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.hero-scroll {
+		position: absolute;
+		bottom: 1.5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		font-weight: 900;
+		filter: drop-shadow(0 0 3px #000);
+	}
+
+	.hero-scroll-arrow {
+		width: 1.5rem;
+		height: 1.5rem;
+		animation: hero-scroll-jump 3s ease-in-out infinite;
+	}
+
+	@keyframes hero-scroll-jump {
+		0%, 12%, 24%, 100% {
+			transform: translateY(0);
+		}
+		6%, 18% {
+			transform: translateY(10px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-scroll-arrow {
+			animation: none;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.hero-logo {
+			width: 80%;
+		}
+	}
+</style>
