@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategoryIndex from '../../components/catalogue/CategoryIndex.astro';
 import ProductWall from '../../components/catalogue/ProductWall.astro';
 import { categories, type Category } from '../../data/categories';
-import { products } from '../../data/products';
 import { formatPrice } from '../../lib/format';
 
 export const getStaticPaths = () => categories.map((category) => ({ params: { category: category.id }, props: { category } }));
@@ -13,7 +12,6 @@ interface Props {
 }
 
 const { category } = Astro.props;
-const items = products.filter((product) => product.category === category.id);
 ---
 
 <BaseLayout title={`${category.name} · Venkra`}>
@@ -22,9 +20,9 @@ const items = products.filter((product) => product.category === category.id);
 		<div>
 			<header class="section-head">
 				<h1 class="section-title">{category.name}</h1>
-				<p class="eyebrow">{category.count} prendas · Desde {formatPrice(category.fromPrice)}</p>
+				<p class="eyebrow">{category.products.length} prendas · Desde {formatPrice(category.fromPrice)}</p>
 			</header>
-			<ProductWall products={items} />
+			<ProductWall products={category.products} />
 		</div>
 	</main>
 </BaseLayout>

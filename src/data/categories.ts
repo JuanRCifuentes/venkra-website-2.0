@@ -1,4 +1,4 @@
-import { products } from './products';
+import { products, type Product } from './products';
 
 // Hardcoded from the old site's spreadsheet ("categories" sheet) until the
 // catalogue reads its data from a real source.
@@ -8,8 +8,8 @@ export interface Category {
 	name: string;
 	description: string;
 	image: string;
-	/** Number of products in the category. */
-	count: number;
+	/** Its products, in catalogue order. */
+	products: readonly Product[];
 	/** Lowest product price, in pesos. */
 	fromPrice: number;
 }
@@ -42,6 +42,6 @@ const base = [
 ];
 
 export const categories: readonly Category[] = base.map((category) => {
-	const prices = products.filter((product) => product.category === category.id).map((product) => product.price);
-	return { ...category, count: prices.length, fromPrice: Math.min(...prices) };
+	const items = products.filter((product) => product.category === category.id);
+	return { ...category, products: items, fromPrice: Math.min(...items.map((product) => product.price)) };
 });

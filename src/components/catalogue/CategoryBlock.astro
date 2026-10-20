@@ -1,15 +1,13 @@
 ---
 import type { Category } from '../../data/categories';
-import type { Product } from '../../data/products';
 import { formatPrice, padIndex } from '../../lib/format';
 
 interface Props {
 	category: Category;
 	index: number;
-	products: readonly Product[];
 }
 
-const { category, index, products } = Astro.props;
+const { category, index } = Astro.props;
 const href = `/catalogo/${category.id}`;
 ---
 
@@ -24,7 +22,7 @@ const href = `/catalogo/${category.id}`;
 		<h2 id={`${category.id}-title`} class="name"><a href={href}>{category.name}</a></h2>
 		<p class="description">{category.description}</p>
 		<ul class="list">
-			{products.map((product) => (
+			{category.products.map((product) => (
 				<li>
 					<a href={`${href}/${product.id}`}>
 						<span>{product.name}</span>
