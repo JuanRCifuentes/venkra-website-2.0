@@ -1,5 +1,4 @@
 ---
-import { site } from '../../data/site';
 import { padIndex } from '../../lib/format';
 
 const steps = [
@@ -23,13 +22,12 @@ const steps = [
 			</li>
 		))}
 	</ol>
-	<a class="stamp cta" href={site.whatsapp} target="_blank" rel="noopener">Pedir por WhatsApp</a>
 </section>
 
 <style>
 	.steps {
 		list-style: none;
-		margin: 0 0 2.5rem;
+		margin: 0;
 		padding: 0;
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -60,11 +58,6 @@ const steps = [
 		margin: 0;
 		color: var(--color-muted);
 		line-height: 1.6;
-	}
-
-	.cta {
-		display: inline-flex;
-		--stamp-size: 2.75rem;
 	}
 
 	@media (max-width: 760px) {

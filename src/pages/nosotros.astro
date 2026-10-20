@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
 ---
 
 <BaseLayout title="Nosotros · Venkra">
 	<main class="section about">
 		<header class="section-head">
 			<h1 class="section-title">Nosotros</h1>
-			<p class="eyebrow">Faith is necessary for victory</p>
+			<p class="eyebrow">{site.tagline}</p>
 		</header>
 		<p>
 			VENKRA vive los planes que se cruzan en su camino, disfruta de los detalles que se esconden detrás de cada
@@ -37,7 +38,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 	}
 
 	.stamp {
-		display: inline-flex;
 		margin-top: 1rem;
 	}
 </style>

@@ -72,7 +72,7 @@ body {
 /* Square, outlined labels like stamped tags, shared by the header and the footer.
    A component can resize them with --stamp-size. */
 .stamp {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	gap: 0.45rem;
 	height: var(--stamp-size, 2.4rem);
