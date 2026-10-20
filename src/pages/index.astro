@@ -1,19 +1,36 @@
 ---
+import Hero from '../components/Hero.astro';
 ---
 
 <html lang="es">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="theme-color" content="#000" />
+		<meta name="color-scheme" content="dark" />
+		<link rel="preload" href="/hero/poster.webp" as="image" type="image/webp" fetchpriority="high" />
 		<title>Venkra</title>
 	</head>
 	<body>
-		<h1>Venkra</h1>
+		<main>
+			<Hero />
+		</main>
 	</body>
 </html>
+
+<style is:global>
+	:root {
+		color-scheme: dark;
+	}
+
+	body {
+		margin: 0;
+		background: #000;
+		font-family: system-ui, sans-serif;
+	}
+</style>
