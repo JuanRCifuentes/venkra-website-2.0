@@ -1,6 +1,6 @@
 ---
+import { categories } from '../../data/categories';
 import { featured } from '../../data/products';
-import { site } from '../../data/site';
 import { formatPrice } from '../../lib/format';
 ---
 
@@ -12,10 +12,10 @@ import { formatPrice } from '../../lib/format';
 	<ul class="products">
 		{featured.map((product) => (
 			<li>
-				<a class="product" href={site.whatsapp} target="_blank" rel="noopener" aria-label={`Pedir ${product.name} por WhatsApp`}>
-					<img src={product.image} alt="" loading="lazy" decoding="async" />
+				<a class="product" href={`/catalogo/${product.category}/${product.id}`}>
+					<img src={product.images[0]} alt="" loading="lazy" decoding="async" />
 					<span class="name">{product.name}</span>
-					<span class="meta">{product.category} · {formatPrice(product.price)}</span>
+					<span class="meta">{categories.find((category) => category.id === product.category)!.name} · {formatPrice(product.price)}</span>
 				</a>
 			</li>
 		))}

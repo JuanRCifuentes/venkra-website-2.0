@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/catalogue/Breadcrumbs.astro';
+import ProductCover from '../../../components/catalogue/ProductCover.astro';
+import ProductTile from '../../../components/catalogue/ProductTile.astro';
+import { categories } from '../../../data/categories';
+import { products, type Product } from '../../../data/products';
+
+export const getStaticPaths = () =>
+	products.map((product) => ({ params: { category: product.category, product: product.id }, props: { product } }));
+
+interface Props {
+	product: Product;
+}
+
+const { product } = Astro.props;
+const category = categories.find((category) => category.id === product.category)!;
+const more = products.filter((other) => other.category === product.category && other.id !== product.id).slice(0, 4);
+---
+
+<BaseLayout title={`${product.name} · Venkra`}>
+	<main class="product">
+		<div class="crumbs">
+			<Breadcrumbs
+				items={[
+					{ label: 'Catálogo', href: '/#catalogo' },
+					{ label: category.name, href: `/catalogo/${category.id}` },
+					{ label: product.name },
+				]}
+			/>
+		</div>
+		<ProductCover product={product} category={category} />
+		{more.length > 0 && (
+			<section class="section" aria-labelledby="more-title">
+				<header class="section-head">
+					<h2 id="more-title" class="more-title">Más de {category.name}</h2>
+					<a class="eyebrow" href={`/catalogo/${category.id}`}>Ver todo</a>
+				</header>
+				<ul class="more">
+					{more.map((other) => (
+						<li><ProductTile product={other} /></li>
+					))}
+				</ul>
+			</section>
+		)}
+	</main>
+</BaseLayout>
+
+<style>
+	.product {
+		padding-top: var(--header-height);
+	}
+
+	.crumbs {
+		padding: 1rem var(--page-gutter);
+	}
+
+	.more-title {
+		margin: 0;
+		font: 900 clamp(2rem, 4vw, 2.5rem)/0.9 var(--font-display);
+		font-stretch: condensed;
+		text-transform: uppercase;
+	}
+
+	.eyebrow {
+		text-decoration: none;
+	}
+
+	.more {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 4px;
+	}
+
+	.more li {
+		aspect-ratio: 4 / 5;
+	}
+
+	@media (max-width: 760px) {
+		.more {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		/* With an odd count, the last tile fills the row instead of leaving a hole. */
+		.more li:last-child:nth-child(odd) {
+			grid-column: span 2;
+			aspect-ratio: 8 / 5;
+		}
+	}
+</style>
