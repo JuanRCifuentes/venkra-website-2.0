@@ -7,6 +7,8 @@
 	--color-accent: #efe3c8;
 	--color-muted: #9a9a9a;
 	--color-surface: #111;
+	--color-line: rgb(255 255 255 / 0.15);
+	--color-line-strong: rgb(255 255 255 / 0.35);
 
 	--font-display: 'Avenir Next Condensed', 'Arial Narrow', 'Roboto Condensed', Impact, sans-serif;
 	--font-body: system-ui, sans-serif;
@@ -23,4 +25,71 @@ body {
 	background: var(--color-bg);
 	color: var(--color-fg);
 	font-family: var(--font-body);
+}
+
+/* How much of a stamp's box shows, 0 to 1. Registered so it can be animated;
+   the header starts its stamps at 0 and flickers them on. */
+@property --on {
+	syntax: '<number>';
+	inherits: false;
+	initial-value: 1;
+}
+
+/* Square, outlined labels like stamped tags, shared by the header and the footer.
+   A component can resize them with --stamp-size. */
+.stamp {
+	display: flex;
+	align-items: center;
+	gap: 0.45rem;
+	height: var(--stamp-size, 2.4rem);
+	padding: 0 1rem;
+	border: 1px solid color-mix(in srgb, var(--color-line-strong) calc(var(--on) * 100%), transparent);
+	background: transparent;
+	color: var(--color-fg);
+	font: 700 0.95rem/1 var(--font-display);
+	letter-spacing: 0.16em;
+	text-decoration: none;
+	text-transform: uppercase;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.stamp:hover {
+	background: var(--color-fg);
+	border-color: var(--color-fg);
+	color: var(--color-bg);
+}
+
+.stamp:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
+}
+
+.stamp svg {
+	width: 1.1rem;
+	height: 1.1rem;
+}
+
+.num {
+	font: 600 0.65rem/1 var(--font-body);
+	letter-spacing: 0.05em;
+	opacity: 0.6;
+}
+
+.stamp.icon {
+	width: var(--stamp-size, 2.4rem);
+	padding: 0;
+	justify-content: center;
+}
+
+.stamp.cta {
+	border-color: color-mix(in srgb, var(--color-accent) calc(var(--on) * 100%), transparent);
+	background: color-mix(in srgb, var(--color-accent) calc(var(--on) * 100%), transparent);
+	color: color-mix(in srgb, var(--color-bg) calc(var(--on) * 100%), var(--color-accent));
+	justify-content: center;
+}
+
+.stamp.cta svg {
+	width: 1rem;
+	height: 1rem;
 }
