@@ -14,7 +14,7 @@ const POSTER = 'public/hero/poster.webp';
 /** URL of the card for a page, by its slug under /og. */
 export const cardUrl = (slug: string) => `/og/${slug}.jpg`;
 
-export interface ProductCard {
+export interface CardText {
 	eyebrow: string;
 	name: string;
 	/** Price line, like "$75.000" or "Desde $35.000". */
@@ -85,30 +85,47 @@ export const homeCard = async () =>
 		),
 	);
 
-/** A product's or a line's card: its photo beside a cream panel, like the product page. */
-export const productCard = async ({ eyebrow, name, price, photo }: ProductCard) => {
-	const side = CARD.height;
-	return render(
+/** A photo beside a panel, both the card's height. */
+const split = async (photo: string, background: string, ...panel: Node[]) =>
+	render(
 		box(
-			{ ...CARD, background: CREAM, color: '#000', fontFamily: 'Roboto Condensed' },
-			img(await photoUri(await fetchPhoto(photo), side, side), { width: side, height: side }),
-			box(
-				{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: '60px 56px' },
-				box(
-					{ flexDirection: 'column' },
-					box(caps(24, 8, '#000'), eyebrow),
-					box(
-						{ marginTop: 20, fontSize: name.length > 12 ? 84 : 120, fontWeight: 900, lineHeight: 0.86, textTransform: 'uppercase' },
-						name,
-					),
-					box({ marginTop: 28, fontSize: 44, fontWeight: 700 }, price),
-				),
-				box(
-					{ alignItems: 'center', justifyContent: 'space-between' },
-					img(svgUri(eagleSvg, '#000'), { width: 110, height: 58 }),
-					box(caps(22, 6, '#000'), 'Pide por WhatsApp'),
-				),
-			),
+			{ ...CARD, background, fontFamily: 'Roboto Condensed' },
+			img(await photoUri(await fetchPhoto(photo), CARD.height, CARD.height), { width: CARD.height, height: CARD.height }),
+			box({ flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: '60px 56px' }, ...panel),
 		),
 	);
-};
+
+const bigName = (name: string, color: string) =>
+	box({ marginTop: 20, fontSize: name.length > 12 ? 84 : 120, fontWeight: 900, lineHeight: 0.86, color, textTransform: 'uppercase' }, name);
+
+/** A product's card: its photo beside a cream panel, like the product page. */
+export const productCard = ({ eyebrow, name, price, photo }: CardText) =>
+	split(
+		photo,
+		CREAM,
+		box(
+			{ flexDirection: 'column' },
+			box(caps(24, 8, '#000'), eyebrow),
+			bigName(name, '#000'),
+			box({ marginTop: 28, fontSize: 44, fontWeight: 700 }, price),
+		),
+		box(
+			{ alignItems: 'center', justifyContent: 'space-between' },
+			img(svgUri(eagleSvg, '#000'), { width: 110, height: 58 }),
+			box(caps(22, 6, '#000'), 'Pide por WhatsApp'),
+		),
+	);
+
+/** A line's card: its photo beside a black panel with the eagle. */
+export const categoryCard = ({ eyebrow, name, price, photo }: CardText) =>
+	split(
+		photo,
+		'#000',
+		img(svgUri(eagleSvg, '#fff'), { width: 150, height: 79 }),
+		box(
+			{ flexDirection: 'column' },
+			bigName(name, '#fff'),
+			box({ ...caps(26, 6, CREAM), marginTop: 24 }, `${eyebrow} · ${price}`),
+		),
+		box(caps(20, 5, '#9a9a9a'), 'Faith is necessary for victory'),
+	);

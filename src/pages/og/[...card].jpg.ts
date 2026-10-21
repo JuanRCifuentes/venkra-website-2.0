@@ -2,7 +2,7 @@ import type { APIRoute, GetStaticPaths } from 'astro';
 import { categories } from '../../data/categories';
 import { products } from '../../data/products';
 import { formatPrice } from '../../lib/format';
-import { homeCard, productCard } from '../../lib/og';
+import { categoryCard, homeCard, productCard } from '../../lib/og';
 
 // One link preview card per page that has its own: the site, each line and each product.
 export const getStaticPaths = (() => [
@@ -11,7 +11,7 @@ export const getStaticPaths = (() => [
 		params: { card: `catalogo/${category.id}` },
 		props: {
 			draw: () =>
-				productCard({
+				categoryCard({
 					eyebrow: `${category.products.length} prendas`,
 					name: category.name,
 					price: `Desde ${formatPrice(category.fromPrice)}`,
