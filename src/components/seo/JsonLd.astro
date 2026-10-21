@@ -4,6 +4,8 @@ interface Props {
 }
 
 const { data } = Astro.props;
+// Escape "<" so no text in the data can close the script element early.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
 ---
 
-<script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />
+<script is:inline type="application/ld+json" set:html={json} />
