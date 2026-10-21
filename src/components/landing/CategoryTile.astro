@@ -16,7 +16,7 @@ const { category, index, featured = false } = Astro.props;
 	<span class="index">{padIndex(index)}</span>
 	<span class="caption">
 		<span class="name">{category.name}</span>
-		<span class="meta">{category.count} ref. · desde {formatPrice(category.fromPrice)}</span>
+		<span class="meta">{category.products.length} ref. · desde {formatPrice(category.fromPrice)}</span>
 	</span>
 </a>
 

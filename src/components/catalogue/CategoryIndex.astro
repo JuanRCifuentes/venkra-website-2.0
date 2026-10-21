@@ -23,7 +23,7 @@ const { categories, current } = Astro.props;
 					<a href={`/catalogo/${category.id}`} aria-current={category.id === current.id ? 'page' : undefined}>
 						<span class="num">{padIndex(i + 1)}</span>
 						{category.name}
-						<span class="count">{category.count}</span>
+						<span class="count">{category.products.length}</span>
 					</a>
 				</li>
 			))}

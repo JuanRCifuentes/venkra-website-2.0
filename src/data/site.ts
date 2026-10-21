@@ -8,7 +8,7 @@ export const site = {
 	tagline: 'Faith is necessary for victory',
 	credit: { label: 'Sitio por @juanrcifuentes', href: 'https://profile.juanrcifuentes.com' },
 	links: [
-		{ label: 'Catálogo', href: '/#catalogo' },
+		{ label: 'Catálogo', href: '/catalogo' },
 		{ label: 'Nosotros', href: '/nosotros' },
 	],
 	support: [
