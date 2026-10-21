@@ -1,6 +1,6 @@
 ---
 import type { Product } from '../../data/products';
-import { wallSpan } from '../../lib/wall';
+import { tileSizes, wallSpan } from '../../lib/wall';
 import ProductTile from './ProductTile.astro';
 
 interface Props {
@@ -8,12 +8,17 @@ interface Props {
 }
 
 const { products } = Astro.props;
+const tiles = products.map((product, i) => ({
+	product,
+	desktop: wallSpan(i, products.length, 3),
+	mobile: wallSpan(i, products.length, 2),
+}));
 ---
 
 <ul class="wall">
-	{products.map((product, i) => (
-		<li data-d={wallSpan(i, products.length, 3)} data-m={wallSpan(i, products.length, 2)}>
-			<ProductTile product={product} />
+	{tiles.map(({ product, desktop, mobile }) => (
+		<li data-d={desktop} data-m={mobile}>
+			<ProductTile product={product} sizes={tileSizes(desktop, mobile)} />
 		</li>
 	))}
 </ul>

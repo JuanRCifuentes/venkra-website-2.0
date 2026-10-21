@@ -11,7 +11,7 @@ const { products } = Astro.props;
 
 <ul class="row">
 	{products.map((product) => (
-		<li><ProductTile product={product} /></li>
+		<li><ProductTile product={product} sizes="(max-width: 760px) 50vw, 25vw" /></li>
 	))}
 </ul>
 

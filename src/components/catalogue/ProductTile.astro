@@ -1,16 +1,19 @@
 ---
 import type { Product } from '../../data/products';
 import { formatPrice } from '../../lib/format';
+import Photo from '../media/Photo.astro';
 
 interface Props {
 	product: Product;
+	/** How wide the tile shows, for the photo's srcset. */
+	sizes: string;
 }
 
-const { product } = Astro.props;
+const { product, sizes } = Astro.props;
 ---
 
 <a class="tile" href={`/catalogo/${product.category}/${product.id}`}>
-	<img src={product.images[0]} alt="" loading="lazy" decoding="async" />
+	<Photo src={product.images[0]} alt="" sizes={sizes} />
 	<span class="tag">{product.name}<span>{formatPrice(product.price)}</span></span>
 </a>
 

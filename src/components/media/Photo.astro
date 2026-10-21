@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { photo } from '../../lib/photo';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'srcset' | 'width' | 'height'> {
+	src: string;
+	/** How wide the photo shows, so the browser picks the smallest width that fills it. */
+	sizes: string;
+}
+
+const { src, ...attrs } = Astro.props;
+const image = await photo(src);
+---
+
+{/* One spread, so the caller's loading or decoding replaces the default instead of repeating it. */}
+<img src={image.src} srcset={image.srcSet.attribute} {...{ ...image.attributes, ...attrs }} />

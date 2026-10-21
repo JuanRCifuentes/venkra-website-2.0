@@ -1,5 +1,6 @@
 ---
 import { site } from '../../data/site';
+import Photo from '../media/Photo.astro';
 
 // More product shots from the old site's spreadsheet, standing in for the
 // Instagram feed until it is pulled in for real.
@@ -20,7 +21,7 @@ const photos = [
 	</header>
 	<ul class="photos">
 		{photos.map((src) => (
-			<li><img src={src} alt="" loading="lazy" decoding="async" /></li>
+			<li><Photo src={src} alt="" sizes="(max-width: 760px) 33vw, 17vw" /></li>
 		))}
 	</ul>
 </section>
@@ -42,6 +43,7 @@ const photos = [
 	img {
 		display: block;
 		width: 100%;
+		height: auto;
 		aspect-ratio: 1;
 		object-fit: cover;
 		background: var(--color-surface);

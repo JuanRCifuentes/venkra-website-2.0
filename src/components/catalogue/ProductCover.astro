@@ -3,6 +3,7 @@ import type { Category } from '../../data/categories';
 import type { Product } from '../../data/products';
 import { formatPrice } from '../../lib/format';
 import { orderLink } from '../../lib/whatsapp';
+import Photo from '../media/Photo.astro';
 
 interface Props {
 	product: Product;
@@ -18,7 +19,15 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 ---
 
 <section class="cover" data-cover>
-	<img class="photo" src={product.images[0]} alt={product.name} data-photo />
+	<Photo
+		class="photo"
+		src={product.images[0]}
+		alt={product.name}
+		sizes="(max-width: 760px) 100vw, 58vw"
+		loading="eager"
+		fetchpriority="high"
+		data-photo
+	/>
 	<div class="panel cream">
 		<div class="intro">
 			<p class="eyebrow">{category.name}</p>
@@ -32,8 +41,8 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 			{product.images.length > 1 && (
 				<div class="thumbs">
 					{product.images.map((src, i) => (
-						<button type="button" data-src={src} aria-pressed={i === 0 ? 'true' : 'false'} aria-label={`Foto ${i + 1}`}>
-							<img src={src} alt="" loading="lazy" decoding="async" />
+						<button type="button" data-thumb aria-pressed={i === 0 ? 'true' : 'false'} aria-label={`Foto ${i + 1}`}>
+							<Photo src={src} alt="" sizes="60px" />
 						</button>
 					))}
 				</div>
@@ -69,15 +78,17 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 
 <script>
 	// Listening on the document once keeps working across client navigations.
-	// Thumbs swap the photo; sizes point the order link at the chosen size.
+	// Thumbs swap the photo (their srcset lists the same widths); sizes point the
+	// order link at the chosen size.
 	document.addEventListener('click', (event) => {
 		const button = (event.target as Element).closest<HTMLButtonElement>('[data-cover] button');
 		const cover = button?.closest<HTMLElement>('[data-cover]');
 		if (!button || !cover) return;
-		const group = button.dataset.src ? 'data-src' : 'data-size';
+		const group = 'thumb' in button.dataset ? 'data-thumb' : 'data-size';
 		cover.querySelectorAll(`[${group}]`).forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
-		if (button.dataset.src) {
-			cover.querySelector<HTMLImageElement>('[data-photo]')!.src = button.dataset.src;
+		if (group === 'data-thumb') {
+			const { srcset, src } = button.querySelector('img')!;
+			Object.assign(cover.querySelector<HTMLImageElement>('[data-photo]')!, { srcset, src });
 		} else {
 			const cta = cover.querySelector<HTMLAnchorElement>('[data-cta]')!;
 			cta.href = button.dataset.href!;
@@ -158,6 +169,7 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 	.thumbs img {
 		display: block;
 		width: 100%;
+		height: auto;
 		aspect-ratio: 4 / 5;
 		object-fit: cover;
 	}
