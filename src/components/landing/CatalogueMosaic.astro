@@ -1,6 +1,7 @@
 ---
 import type { Category } from '../../data/categories';
 import CategoryTile from './CategoryTile.astro';
+import { site } from '../../data/site';
 
 interface Props {
 	categories: readonly Category[];
@@ -12,7 +13,7 @@ const { categories } = Astro.props;
 <section id="catalogo" class="section" aria-labelledby="catalogue-title">
 	<header class="section-head">
 		<h2 id="catalogue-title" class="section-title">Catálogo</h2>
-		<p class="eyebrow">Urban denim · Handcrafted · Original</p>
+		<p class="eyebrow">{site.stamp}</p>
 	</header>
 	<ul class="mosaic">
 		{categories.map((category, i) => (

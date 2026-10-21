@@ -6,6 +6,8 @@ export const site = {
 	messenger: 'https://m.me/Venkra.co',
 	phone: '+57 304 6050080',
 	tagline: 'Faith is necessary for victory',
+	/** The stamp printed on the shirts. */
+	stamp: 'Urban denim · Handcrafted · Original',
 	credit: { label: 'Sitio por @juanrcifuentes', href: 'https://profile.juanrcifuentes.com' },
 	links: [
 		{ label: 'Catálogo', href: '/catalogo' },
