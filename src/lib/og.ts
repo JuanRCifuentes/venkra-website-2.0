@@ -5,6 +5,7 @@ import satori from 'satori';
 import sharp from 'sharp';
 import eagleSvg from '../assets/eagle.svg?raw';
 import logoSvg from '../assets/logo-full.svg?raw';
+import { site } from '../data/site';
 
 export const CARD = { width: 1200, height: 630 } as const;
 
@@ -80,7 +81,7 @@ export const homeCard = async () =>
 			box(
 				{ position: 'absolute', inset: 0, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' },
 				img(svgUri(logoSvg, '#fff'), { width: 640, height: 250 }),
-				box({ ...caps(24, 10, CREAM), marginTop: 40 }, 'Urban denim · Handcrafted · Original'),
+				box({ ...caps(24, 10, CREAM), marginTop: 40 }, site.stamp),
 			),
 		),
 	);
@@ -127,5 +128,5 @@ export const categoryCard = ({ eyebrow, name, price, photo }: CardText) =>
 			bigName(name, '#fff'),
 			box({ ...caps(26, 6, CREAM), marginTop: 24 }, `${eyebrow} · ${price}`),
 		),
-		box(caps(20, 5, '#9a9a9a'), 'Faith is necessary for victory'),
+		box(caps(20, 5, '#9a9a9a'), site.tagline),
 	);

@@ -1,6 +1,5 @@
 import type { APIRoute, GetStaticPaths } from 'astro';
 import { categories } from '../../data/categories';
-import { products } from '../../data/products';
 import { formatPrice } from '../../lib/format';
 import { categoryCard, homeCard, productCard } from '../../lib/og';
 
@@ -19,18 +18,20 @@ export const getStaticPaths = (() => [
 				}),
 		},
 	})),
-	...products.map((product) => ({
-		params: { card: `catalogo/${product.category}/${product.id}` },
-		props: {
-			draw: () =>
-				productCard({
-					eyebrow: categories.find((category) => category.id === product.category)!.name,
-					name: product.name,
-					price: formatPrice(product.price),
-					photo: product.images[0],
-				}),
-		},
-	})),
+	...categories.flatMap((category) =>
+		category.products.map((product) => ({
+			params: { card: `catalogo/${category.id}/${product.id}` },
+			props: {
+				draw: () =>
+					productCard({
+						eyebrow: category.name,
+						name: product.name,
+						price: formatPrice(product.price),
+						photo: product.images[0],
+					}),
+			},
+		})),
+	),
 ]) satisfies GetStaticPaths;
 
 export const GET: APIRoute = async ({ props }) =>
