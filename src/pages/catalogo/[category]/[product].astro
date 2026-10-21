@@ -5,6 +5,7 @@ import ProductCover from '../../../components/catalogue/ProductCover.astro';
 import ProductRow from '../../../components/catalogue/ProductRow.astro';
 import { categories } from '../../../data/categories';
 import { products, type Product } from '../../../data/products';
+import { cardUrl } from '../../../lib/og';
 
 export const getStaticPaths = () =>
 	products.map((product) => ({ params: { category: product.category, product: product.id }, props: { product } }));
@@ -18,7 +19,7 @@ const category = categories.find((category) => category.id === product.category)
 const more = products.filter((other) => other.category === product.category && other.id !== product.id).slice(0, 4);
 ---
 
-<BaseLayout title={`${product.name} · Venkra`}>
+<BaseLayout title={`${product.name} · Venkra`} image={cardUrl(`catalogo/${category.id}/${product.id}`)}>
 	<main class="product">
 		<div class="crumbs">
 			<Breadcrumbs
