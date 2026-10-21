@@ -55,6 +55,16 @@ export const organizationSchema = (origin: URL) =>
 		},
 	});
 
+export const websiteSchema = (origin: URL) =>
+	ld({
+		'@type': 'WebSite',
+		'@id': new URL('/#website', origin).href,
+		name: 'Venkra',
+		url: origin.href,
+		inLanguage: 'es-CO',
+		publisher: { '@id': new URL('/#organization', origin).href },
+	});
+
 export const productSchema = (product: Product, origin: URL) =>
 	ld({
 		'@type': 'Product',

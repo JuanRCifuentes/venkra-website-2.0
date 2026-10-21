@@ -10,11 +10,12 @@ import InstagramStrip from '../components/landing/InstagramStrip.astro';
 import Contact from '../components/landing/Contact.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import { categories } from '../data/categories';
-import { organizationSchema } from '../lib/seo';
+import { organizationSchema, websiteSchema } from '../lib/seo';
 ---
 
 <BaseLayout title="Venkra · Camisetas oversized y streetwear en Colombia" heroLogo=".hero-logo > svg">
 	<JsonLd slot="head" data={organizationSchema(Astro.site!)} />
+	<JsonLd slot="head" data={websiteSchema(Astro.site!)} />
 	<link slot="head" rel="preload" href="/hero/poster.webp" as="image" type="image/webp" fetchpriority="high" />
 	<main>
 		<Hero />
