@@ -169,7 +169,7 @@ export const products: readonly Product[] = [
 	},
 ];
 
-/** One standout piece per category, for the landing. */
+/** Four standout pieces for the landing row. */
 export const featured = ['black-smoke', 'yellow-shadow', 'trucker-snake', 'white-smoke'].map(
 	(id) => products.find((product) => product.id === id)!,
 );
