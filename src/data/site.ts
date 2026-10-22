@@ -9,7 +9,7 @@ export const site = {
 	messenger: 'https://m.me/Venkra.co',
 	phone: '+57 304 6050080',
 	tagline,
-	description: `Camisetas oversized, gorras y polos hechos a mano. ${tagline}.`,
+	description: `Camisetas oversized, y gorras hechas a mano. ${tagline}.`,
 	/** The stamp printed on the shirts. */
 	stamp: 'Urban denim · Handcrafted · Original',
 	credit: { label: 'Sitio por @juanrcifuentes', href: 'https://profile.juanrcifuentes.com' },
