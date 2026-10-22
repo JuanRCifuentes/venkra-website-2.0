@@ -43,14 +43,6 @@ const base = [
 		description: 'Gorras con diseño exclusivo, con hebilla metálica.',
 		image: 'https://i.postimg.cc/NMq8zwNN/Roja1.jpg',
 	},
-	{
-		id: 'polos',
-		garment: 'buso',
-		googleCategory: 212,
-		name: 'Polos',
-		description: 'Busos y hoodies de algodón perchado.',
-		image: 'https://i.postimg.cc/MH7k1hM0/busos-y-hoodies.jpg',
-	},
 ];
 
 export const categories: readonly Category[] = base.map((category) => {

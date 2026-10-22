@@ -167,27 +167,9 @@ export const products: readonly Product[] = [
 		images: [img('rmXGPLhY/Snake1.jpg')],
 		stock: { Única: 1 },
 	},
-	{
-		id: 'buso-venkra',
-		name: 'Buso Venkra',
-		category: 'polos',
-		price: 130000,
-		details: ['Algodón perchado', 'Estampado rojo de diseño exclusivo', 'Rib en mangas y fajín'],
-		images: [img('52pTV29c/b-venkra-negro-p.jpg')],
-		stock: shirt(3, 7, 7, 2),
-	},
-	{
-		id: 'hoodie-vnk',
-		name: 'Hoodie VNK',
-		category: 'polos',
-		price: 150000,
-		details: ['Algodón perchado', 'Estampado negro de diseño exclusivo', 'Punteras y ojaletes metálicos contramarcados'],
-		images: [img('3wXm2NSk/b-hoodie-gris-p.jpg')],
-		stock: shirt(0, 0, 0, 1),
-	},
 ];
 
-/** One standout piece per category, for the landing. */
-export const featured = ['black-smoke', 'yellow-shadow', 'trucker-snake', 'hoodie-vnk'].map(
+/** Four standout pieces for the landing row. */
+export const featured = ['black-smoke', 'yellow-shadow', 'trucker-snake', 'white-smoke'].map(
 	(id) => products.find((product) => product.id === id)!,
 );
