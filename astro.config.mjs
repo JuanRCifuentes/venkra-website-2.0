@@ -8,6 +8,6 @@ export default defineConfig({
 	trailingSlash: 'never',
 	// Inline all CSS so the first paint never waits on a stylesheet request.
 	build: { inlineStylesheets: 'always' },
-	// Catalogue photos are optimized at build time from their postimg originals.
-	image: { domains: ['i.postimg.cc'] },
+	// Catalogue photos are optimized at build time from their originals on postimg or R2.
+	image: { domains: ['i.postimg.cc', 'images.venkra.maxfika.com'] },
 });
