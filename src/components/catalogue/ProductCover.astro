@@ -39,7 +39,7 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 				</div>
 			)}
 			{picker && (
-				<fieldset class="sizes">
+				<fieldset class="sizes" style={`--sizes: ${sizes.length}`}>
 					<legend class="eyebrow">Talla</legend>
 					{sizes.map(([label, units]) => (
 						<button
@@ -168,7 +168,7 @@ const size = sizes.find(([, units]) => units > 0)?.[0];
 
 	.sizes {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(var(--sizes), minmax(0, 1fr));
 		gap: 0.5rem;
 		margin: 0;
 		padding: 1rem 0 0;

@@ -1,8 +1,9 @@
 ---
 import { site } from '../../data/site';
+import { r2 } from '../../lib/r2';
 
 // Brand shots from the R2 image bucket, each linking to its Instagram post.
-const image = (file: string) => `https://images.venkra.maxfika.com/${file}.webp`;
+const image = (file: string) => r2(`${file}.webp`);
 const posts = [
 	{ src: image('01-saxophonist'), alt: 'Saxofonista con ropa Venkra', href: 'https://www.instagram.com/reel/Cg7z0oLKxjA/' },
 	{ src: image('02-venkra-seated-models'), alt: 'Modelos sentados con ropa Venkra', href: 'https://www.instagram.com/p/CndWUNZtq34/' },

@@ -1,3 +1,5 @@
+import { r2 } from '../lib/r2';
+
 // Hardcoded from the old site's spreadsheet ("products" and "images" sheets)
 // until the catalogue reads its data from a real source.
 export interface Product {
@@ -132,6 +134,21 @@ export const products: readonly Product[] = [
 		stock: shirt(1, 1, 2, 2),
 	},
 	{
+		id: 'sunset',
+		name: 'Sunset',
+		category: 'regular-fit',
+		price: 70000,
+		details: [
+			'Algodón Qtar de 250 g, suave y con buena consistencia',
+			'Corte regular que se ajusta perfecto a la silueta',
+			'Estampado circular de atardecer con el águila VENKRA',
+		],
+		images: ['1-semifrente', '2-frente', '3-cuello', '4-manga', '5-estampado'].map((photo) =>
+			r2(`camiseta_estampada/${photo}-circular-1600.webp`),
+		),
+		stock: { ...shirt(1, 1, 1, 1), XXL: 1 },
+	},
+	{
 		id: 'trucker-carbon',
 		name: 'Trucker Carbon',
 		category: 'gorras',
@@ -170,6 +187,6 @@ export const products: readonly Product[] = [
 ];
 
 /** Four standout pieces for the landing row. */
-export const featured = ['black-smoke', 'yellow-shadow', 'trucker-snake', 'white-smoke'].map(
+export const featured = ['black-smoke', 'yellow-shadow', 'trucker-snake', 'sunset'].map(
 	(id) => products.find((product) => product.id === id)!,
 );

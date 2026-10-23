@@ -1,3 +1,4 @@
+import { r2 } from '../lib/r2';
 import { products, type Product } from './products';
 
 // Hardcoded from the old site's spreadsheet ("categories" sheet) until the
@@ -34,6 +35,14 @@ const base = [
 		name: 'Over Qtar',
 		description: 'Excelentes camisas oversized de algodón qtar.',
 		image: 'https://i.postimg.cc/dVYHNp1F/OVERZ-Gris-(3).jpg',
+	},
+	{
+		id: 'regular-fit',
+		garment: 'camiseta regular fit',
+		googleCategory: 212,
+		name: 'Regular Fit',
+		description: 'Camisetas de corte regular en algodón Qtar de 250 g, con estampados de diseño exclusivo.',
+		image: r2('camiseta_estampada/2-frente-circular-1600.webp'),
 	},
 	{
 		id: 'gorras',
