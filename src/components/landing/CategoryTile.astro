@@ -1,6 +1,7 @@
 ---
 import type { Category } from '../../data/categories';
 import { formatPrice, padIndex } from '../../lib/format';
+import Photo from '../media/Photo.astro';
 
 interface Props {
 	category: Category;
@@ -12,7 +13,7 @@ const { category, index, featured = false } = Astro.props;
 ---
 
 <a class:list={['tile', { featured }]} href={`/catalogo/${category.id}`}>
-	<img src={category.image} alt="" loading="lazy" decoding="async" />
+	<Photo src={category.image} alt="" sizes="(max-width: 760px) 100vw, 50vw" />
 	<span class="index">{padIndex(index)}</span>
 	<span class="caption">
 		<span class="name">{category.name}</span>

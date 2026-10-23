@@ -14,3 +14,12 @@ export const wallSpan = (i: number, count: number, columns: 2 | 3): Span => {
 	const leftover = (last - 2) % 3;
 	return leftover === 1 ? 'full' : leftover === 2 ? 'wide' : '';
 };
+
+// Columns a tile spans; tall tiles crop a photo twice as tall, so they need it as wide as two.
+const columnsOf: Record<Span, number> = { '': 1, big: 2, wide: 2, tall: 2, full: 3 };
+
+/** The photo's `sizes` for a tile with these spans in 3 columns and, on phones, 2. */
+export const tileSizes = (desktop: Span, mobile: Span) => {
+	const share = (span: Span, columns: number) => Math.round((100 * Math.min(columnsOf[span], columns)) / columns);
+	return `(max-width: 760px) ${share(mobile, 2)}vw, ${share(desktop, 3)}vw`;
+};
