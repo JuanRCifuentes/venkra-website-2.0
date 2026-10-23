@@ -139,14 +139,14 @@ export const products: readonly Product[] = [
 		category: 'regular-fit',
 		price: 70000,
 		details: [
-			'Camiseta blanca de corte regular',
+			'Algodón Qtar de 250 g, suave y con buena consistencia',
+			'Corte regular que se ajusta perfecto a la silueta',
 			'Estampado circular de atardecer con el águila VENKRA',
-			'Cuello y puños de manga en rib',
 		],
 		images: ['1-semifrente', '2-frente', '3-cuello', '4-manga', '5-estampado'].map((photo) =>
 			r2(`camiseta_estampada/${photo}-circular-1600.webp`),
 		),
-		stock: shirt(1, 1, 1, 1),
+		stock: { ...shirt(1, 1, 1, 1), XXL: 1 },
 	},
 	{
 		id: 'trucker-carbon',

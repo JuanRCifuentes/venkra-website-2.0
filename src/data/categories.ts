@@ -41,7 +41,7 @@ const base = [
 		garment: 'camiseta regular fit',
 		googleCategory: 212,
 		name: 'Regular Fit',
-		description: 'Camisetas de corte regular con estampados de diseño exclusivo.',
+		description: 'Camisetas de corte regular en algodón Qtar de 250 g, con estampados de diseño exclusivo.',
 		image: r2('camiseta_estampada/2-frente-circular-1600.webp'),
 	},
 	{
