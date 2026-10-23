@@ -36,6 +36,14 @@ const base = [
 		image: 'https://i.postimg.cc/dVYHNp1F/OVERZ-Gris-(3).jpg',
 	},
 	{
+		id: 'regular-fit',
+		garment: 'camiseta regular fit',
+		googleCategory: 212,
+		name: 'Regular Fit',
+		description: 'Camisetas de corte regular con estampados de diseño exclusivo.',
+		image: 'https://images.venkra.maxfika.com/camiseta_estampada/2-frente-circular-1600.webp',
+	},
+	{
 		id: 'gorras',
 		garment: 'gorra',
 		googleCategory: 173,

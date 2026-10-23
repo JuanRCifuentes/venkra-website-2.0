@@ -16,6 +16,7 @@ export interface Product {
 }
 
 const img = (path: string) => `https://i.postimg.cc/${path}`;
+const r2 = (path: string) => `https://images.venkra.maxfika.com/${path}`;
 const shirt = (s: number, m: number, l: number, xl: number) => ({ S: s, M: m, L: l, XL: xl });
 const smoke = ['Algodón premium de 200 g con lavado vintage', 'Corte amplio y ultra cómodo'];
 const qtar = ['Algodón peinado heavyweight de 220 a 260 g', 'Oversized fit con hombros caídos'];
@@ -132,6 +133,21 @@ export const products: readonly Product[] = [
 		stock: shirt(1, 1, 2, 2),
 	},
 	{
+		id: 'sunset',
+		name: 'Sunset',
+		category: 'regular-fit',
+		price: 70000,
+		details: [
+			'Camiseta blanca de corte regular',
+			'Estampado circular de atardecer con el águila VENKRA',
+			'Cuello y puños de manga en rib',
+		],
+		images: ['1-semifrente', '2-frente', '3-cuello', '4-manga', '5-estampado'].map((photo) =>
+			r2(`camiseta_estampada/${photo}-circular-1600.webp`),
+		),
+		stock: shirt(1, 1, 1, 1),
+	},
+	{
 		id: 'trucker-carbon',
 		name: 'Trucker Carbon',
 		category: 'gorras',
@@ -170,6 +186,6 @@ export const products: readonly Product[] = [
 ];
 
 /** Four standout pieces for the landing row. */
-export const featured = ['black-smoke', 'yellow-shadow', 'trucker-snake', 'white-smoke'].map(
+export const featured = ['black-smoke', 'yellow-shadow', 'trucker-snake', 'sunset'].map(
 	(id) => products.find((product) => product.id === id)!,
 );
