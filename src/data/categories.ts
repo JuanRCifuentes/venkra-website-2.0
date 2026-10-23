@@ -1,3 +1,4 @@
+import { r2 } from '../lib/r2';
 import { products, type Product } from './products';
 
 // Hardcoded from the old site's spreadsheet ("categories" sheet) until the
@@ -41,7 +42,7 @@ const base = [
 		googleCategory: 212,
 		name: 'Regular Fit',
 		description: 'Camisetas de corte regular con estampados de diseño exclusivo.',
-		image: 'https://images.venkra.maxfika.com/camiseta_estampada/2-frente-circular-1600.webp',
+		image: r2('camiseta_estampada/2-frente-circular-1600.webp'),
 	},
 	{
 		id: 'gorras',

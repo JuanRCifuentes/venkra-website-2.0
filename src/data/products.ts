@@ -1,3 +1,5 @@
+import { r2 } from '../lib/r2';
+
 // Hardcoded from the old site's spreadsheet ("products" and "images" sheets)
 // until the catalogue reads its data from a real source.
 export interface Product {
@@ -16,7 +18,6 @@ export interface Product {
 }
 
 const img = (path: string) => `https://i.postimg.cc/${path}`;
-const r2 = (path: string) => `https://images.venkra.maxfika.com/${path}`;
 const shirt = (s: number, m: number, l: number, xl: number) => ({ S: s, M: m, L: l, XL: xl });
 const smoke = ['Algodón premium de 200 g con lavado vintage', 'Corte amplio y ultra cómodo'];
 const qtar = ['Algodón peinado heavyweight de 220 a 260 g', 'Oversized fit con hombros caídos'];
